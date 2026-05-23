@@ -288,9 +288,9 @@ export default function CreateAssignmentPage() {
               <button 
                 type="button" 
                 onClick={() => append({ type: "Multiple Choice Questions", count: 1, marks: 1 })}
-                className="flex items-center gap-3 text-[13px] font-extrabold text-gray-900 hover:opacity-80 transition-opacity ml-1 md:mt-6"
+                className="flex items-center gap-3 text-[13px] font-extrabold text-gray-900 hover:text-black transition-all duration-300 ml-1 md:mt-6 group cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
               >
-                <div className="w-7 h-7 rounded-full bg-[#1A1A1A] text-white flex items-center justify-center">
+                <div className="w-7 h-7 rounded-full bg-[#1A1A1A] group-hover:bg-black text-white flex items-center justify-center transition-colors">
                   <Plus className="w-4 h-4" strokeWidth={3} />
                 </div>
                 Add Question Type
@@ -324,7 +324,7 @@ export default function CreateAssignmentPage() {
           <button 
             type="button" 
             onClick={() => router.back()}
-            className="flex items-center justify-center gap-2 px-6 py-3.5 min-w-[140px] bg-white rounded-full text-[14px] font-bold text-gray-800 shadow-[0_2px_10px_rgba(0,0,0,0.05)] hover:bg-gray-50"
+            className="flex items-center justify-center gap-2 px-6 py-3.5 min-w-[140px] bg-white rounded-full text-[14px] font-bold text-gray-800 shadow-[0_2px_10px_rgba(0,0,0,0.05)] hover:bg-gray-50 hover:shadow-md transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4" />
             Previous
@@ -334,7 +334,7 @@ export default function CreateAssignmentPage() {
             type="button" 
             onClick={handleSubmit(onSubmit)}
             disabled={isLoading}
-            className="flex items-center justify-center gap-2 px-8 py-3.5 min-w-[140px] bg-[#1A1A1A] text-white rounded-full text-[14px] font-bold shadow-lg hover:bg-black transition-colors"
+            className="flex items-center justify-center gap-2 px-8 py-3.5 min-w-[140px] bg-[#1A1A1A] text-white rounded-full text-[14px] font-bold shadow-lg hover:shadow-xl hover:bg-black transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] cursor-pointer disabled:opacity-70 disabled:hover:scale-100 disabled:cursor-not-allowed"
           >
             {isLoading ? "Generating..." : "Next"}
             {!isLoading && <ArrowRight className="w-4 h-4" />}

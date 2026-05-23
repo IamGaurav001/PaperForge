@@ -38,7 +38,7 @@ export default function AssignmentsPage() {
         {hasAssignments ? (
           <>
             {/* Desktop Header */}
-            <div className="hidden md:block mt-5 mb-5 pl-2">
+            <div className="hidden md:block mb-5 pl-2">
               <h2 className="text-[24px] tracking-tight font-bold text-gray-900 flex items-center gap-3">
                 <div className="flex items-center justify-center w-5 h-5 rounded-full bg-[#A7F3D0]">
                   <div className="w-2.5 h-2.5 rounded-full bg-[#10B981]"></div>
@@ -50,7 +50,7 @@ export default function AssignmentsPage() {
 
             {/* Mobile Header */}
             <div className="flex md:hidden items-center justify-center relative mt-1 mb-5">
-              <button onClick={() => router.back()} className="absolute left-0 w-10 h-10 flex items-center justify-center bg-[#E5E5E5] rounded-full hover:bg-gray-200">
+              <button onClick={() => router.back()} className="absolute left-0 w-10 h-10 flex items-center justify-center bg-[#E5E5E5] rounded-full hover:bg-gray-200 hover:scale-[1.05] active:scale-[0.95] transition-all">
                 <ArrowLeft className="w-5 h-5 text-gray-800" />
               </button>
               <h2 className="text-[16px] font-bold text-gray-900 tracking-tight">Assignments</h2>
@@ -58,7 +58,7 @@ export default function AssignmentsPage() {
 
             {/* Desktop Filters Bar */}
             <div className="hidden md:flex w-full bg-white rounded-[22px] py-4 px-6 items-center justify-between shadow-sm mb-4">
-              <div className="flex items-center gap-2 text-gray-400 cursor-pointer pl-2">
+              <div className="flex items-center gap-2 text-gray-400 cursor-pointer pl-2 hover:text-gray-600 transition-colors">
                 <Filter className="w-5 h-5" />
                 <span className="text-[15px] font-semibold text-gray-500">Filter By</span>
               </div>
@@ -75,7 +75,7 @@ export default function AssignmentsPage() {
 
             {/* Mobile Filters Bar */}
             <div className="flex md:hidden w-full bg-white rounded-full py-3.5 px-5 items-center justify-between shadow-sm mb-5">
-              <div className="flex items-center gap-2 text-gray-400 cursor-pointer pl-1">
+              <div className="flex items-center gap-2 text-gray-400 cursor-pointer pl-1 hover:text-gray-600 transition-colors">
                 <Filter className="w-4 h-4" />
                 <span className="text-[14px] font-medium text-gray-400">Filter</span>
               </div>
@@ -101,7 +101,7 @@ export default function AssignmentsPage() {
                 return (
                 <div 
                   key={jobId || index} 
-                  className="bg-white rounded-[32px] md:rounded-[28px] p-6 md:p-8 border border-gray-100 shadow-sm relative group hover:shadow-md transition-all cursor-pointer"
+                  className="bg-white rounded-[32px] md:rounded-[28px] p-6 md:p-8 border border-gray-100 shadow-sm relative group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer"
                   onClick={() => router.push(`/paper/${jobId}`)}
                 >
                   <div className="flex justify-between items-start mb-5 md:mb-16">
@@ -112,7 +112,7 @@ export default function AssignmentsPage() {
                           e.stopPropagation();
                           setOpenDropdownId(openDropdownId === jobId ? null : jobId);
                         }}
-                        className="text-gray-900 hover:bg-gray-100 p-1 rounded-full transition-colors"
+                        className="text-gray-900 hover:bg-gray-100 p-1 rounded-full transition-all hover:scale-110 active:scale-95"
                       >
                         <MoreVertical className="w-5 h-5" />
                       </button>
@@ -122,10 +122,10 @@ export default function AssignmentsPage() {
                           ref={dropdownRef}
                           className="absolute right-0 top-8 w-40 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-20 flex flex-col"
                         >
-                          <button onClick={(e) => { e.stopPropagation(); router.push(`/paper/${jobId}`); }} className="text-left px-4 py-2 text-[13px] font-semibold hover:bg-gray-50 text-gray-900">
+                          <button onClick={(e) => { e.stopPropagation(); router.push(`/paper/${jobId}`); }} className="text-left px-4 py-2 text-[13px] font-semibold hover:bg-gray-50 text-gray-900 transition-colors">
                             View Assignment
                           </button>
-                          <button onClick={(e) => { e.stopPropagation(); removeJob(jobId); setOpenDropdownId(null); }} className="text-left px-4 py-2 text-[13px] font-semibold hover:bg-red-50 text-red-600">
+                          <button onClick={(e) => { e.stopPropagation(); removeJob(jobId); setOpenDropdownId(null); }} className="text-left px-4 py-2 text-[13px] font-semibold hover:bg-red-50 text-red-600 transition-colors">
                             Delete
                           </button>
                         </div>
@@ -157,7 +157,7 @@ export default function AssignmentsPage() {
               Create your first assignment to start collecting and grading student submissions. You can set up rubrics, define marking criteria, and let AI assist with grading.
             </p>
             <Link href="/create">
-              <button className="bg-[#1A1A1A] hover:bg-black text-white px-6 py-3 rounded-full flex items-center gap-2 font-medium shadow-md transition-transform hover:scale-105">
+              <button className="bg-[#1A1A1A] hover:bg-black text-white px-6 py-3 rounded-full flex items-center gap-2 font-medium shadow-md transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
                 <Plus className="w-5 h-5" />
                 Create Your First Assignment
               </button>
@@ -173,7 +173,7 @@ export default function AssignmentsPage() {
       {hasAssignments && (
         <div className="hidden md:block absolute bottom-8 left-1/2 transform -translate-x-1/2 z-50">
           <Link href="/create">
-            <button className="bg-[#1A1A1A] hover:bg-black text-white px-8 py-3.5 rounded-full flex items-center gap-2 text-[14px] font-bold shadow-2xl hover:scale-105 transition-transform">
+            <button className="bg-[#1A1A1A] hover:bg-black text-white px-8 py-3.5 rounded-full flex items-center gap-2 text-[14px] font-bold shadow-2xl transition-all duration-300 hover:scale-[1.02] hover:shadow-3xl active:scale-[0.98] cursor-pointer">
               <Plus className="w-5 h-5" strokeWidth={2.5} />
               Create Assignment
             </button>
@@ -185,7 +185,7 @@ export default function AssignmentsPage() {
       {hasAssignments && (
         <div className="md:hidden absolute bottom-[115px] right-6 z-40">
           <Link href="/create">
-            <button className="w-[52px] h-[52px] bg-white text-[#FF4500] rounded-full flex items-center justify-center shadow-[0_4px_14px_rgba(0,0,0,0.15)] hover:scale-105 transition-transform">
+            <button className="w-[52px] h-[52px] bg-white text-[#FF4500] rounded-full flex items-center justify-center shadow-[0_4px_14px_rgba(0,0,0,0.15)] transition-all duration-300 hover:scale-[1.05] hover:shadow-[0_6px_20px_rgba(0,0,0,0.2)] active:scale-[0.95] cursor-pointer">
               <Plus className="w-6 h-6" strokeWidth={3} />
             </button>
           </Link>

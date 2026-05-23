@@ -33,9 +33,9 @@ export function Sidebar() {
 
       {/* Action Button */}
       <div className="px-[26px] mb-8 shrink-0 flex justify-center">
-        <Link href="/create" className="block w-[251px]">
-          <div className="w-full h-[42px] rounded-full bg-gradient-to-b from-[#F48F60] to-[#CD462F] p-[2.5px] shadow-[0_8px_16px_-6px_rgba(205,70,47,0.5)]">
-            <button className="w-full h-full bg-[#2e2e2e] hover:bg-[#252525] text-white rounded-full flex items-center justify-center gap-2.5 text-[14px] font-medium transition-colors">
+        <Link href="/create" className="block w-[251px] group cursor-pointer">
+          <div className="w-full h-[42px] rounded-full bg-gradient-to-b from-[#F48F60] to-[#CD462F] p-[2.5px] shadow-[0_8px_16px_-6px_rgba(205,70,47,0.5)] transition-all duration-300 group-hover:shadow-[0_12px_20px_-6px_rgba(205,70,47,0.6)] group-hover:scale-[1.02] group-active:scale-[0.98]">
+            <button className="w-full h-full bg-[#2e2e2e] group-hover:bg-[#252525] text-white rounded-full flex items-center justify-center gap-2.5 text-[14px] font-medium transition-colors cursor-pointer pointer-events-none">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path d="M10 2L11.8 7.8L17.6 9.6L11.8 11.4L10 17.2L8.2 11.4L2.4 9.6L8.2 7.8L10 2Z" />
                 <path d="M19 14L19.9 16.9L22.8 17.8L19.9 18.7L19 21.6L18.1 18.7L15.2 17.8L18.1 16.9L19 14Z" />

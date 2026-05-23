@@ -116,12 +116,12 @@ export default function WelcomePage() {
             </div>
 
             {/* CTA */}
-            <div className={`w-full h-[52px] rounded-full bg-gradient-to-b from-[#F48F60] to-[#CD462F] p-[2.5px] transition-all duration-300 ${nameInput.trim() ? 'shadow-[0_8px_16px_-6px_rgba(205,70,47,0.5)] cursor-pointer' : 'opacity-50 grayscale cursor-not-allowed'}`}>
-              <button
-                onClick={handleContinue}
-                disabled={isLoading || !nameInput.trim()}
-                className="w-full h-full bg-[#2e2e2e] hover:bg-[#252525] text-white rounded-full flex items-center justify-center gap-2.5 text-[14px] font-bold transition-colors disabled:opacity-70"
-              >
+            <button
+              onClick={handleContinue}
+              disabled={isLoading || !nameInput.trim()}
+              className={`w-full h-[52px] rounded-full bg-gradient-to-b from-[#F48F60] to-[#CD462F] p-[2.5px] transition-all duration-300 outline-none group ${nameInput.trim() ? 'shadow-[0_8px_16px_-6px_rgba(205,70,47,0.5)] cursor-pointer hover:shadow-[0_12px_20px_-6px_rgba(205,70,47,0.6)] hover:scale-[1.02] active:scale-[0.98]' : 'opacity-50 grayscale cursor-not-allowed'}`}
+            >
+              <div className="w-full h-full bg-[#2e2e2e] group-hover:bg-[#252525] text-white rounded-full flex items-center justify-center gap-2.5 text-[14px] font-bold transition-colors">
                 {isLoading ? (
                   <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
                 ) : (
@@ -130,8 +130,8 @@ export default function WelcomePage() {
                     <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
                   </>
                 )}
-              </button>
-            </div>
+              </div>
+            </button>
             
             <p className="text-center text-[12px] font-medium text-gray-400 mt-6 leading-relaxed max-w-[260px]">
               By continuing, you enter the workspace as an authorized educator.
