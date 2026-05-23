@@ -41,6 +41,9 @@ importers:
       express:
         specifier: ^4.19.2
         version: 4.22.2
+      ioredis:
+        specifier: ^5.10.1
+        version: 5.10.1
       mongoose:
         specifier: ^8.4.0
         version: 8.24.0(gcp-metadata@8.1.2)
