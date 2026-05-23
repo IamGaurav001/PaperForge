@@ -86,4 +86,40 @@ router.get('/job/:jobId', async (req, res) => {
   }
 });
 
+router.post('/regenerate/:jobId', async (req, res) => {
+  try {
+    const { jobId: oldJobId } = req.params;
+    
+    // Find the original job to get the assignmentId
+    const oldJob = await Job.findOne({ jobId: oldJobId });
+    if (!oldJob) {
+      return res.status(404).json({ error: 'Original job not found' });
+    }
+
+    const assignment = await Assignment.findById(oldJob.assignmentId);
+    if (!assignment) {
+      return res.status(404).json({ error: 'Original assignment not found' });
+    }
+
+    // Create a new Job for the same assignment
+    const newJobId = uuidv4();
+    const newJob = new Job({
+      jobId: newJobId,
+      assignmentId: assignment._id,
+      status: 'QUEUED',
+      progress: 0
+    });
+    await newJob.save();
+
+    // Add to BullMQ
+    await assessmentQueue.add('generate', { jobId: newJobId, assignmentId: assignment._id });
+
+    // Return the new jobId to client
+    res.status(202).json({ jobId: newJobId, message: 'Regeneration queued' });
+  } catch (error) {
+    console.error('Error in /regenerate:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 export default router;
