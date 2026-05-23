@@ -167,7 +167,7 @@ export default function AssignmentsPage() {
       </div>
 
       {/* Bottom Blur Effect */}
-      <div className="absolute bottom-0 left-0 right-0 h-[180px] md:h-[120px] bg-gradient-to-t from-[#ebebeb] via-[#ebebeb]/90 to-transparent pointer-events-none z-30 md:rounded-b-[32px]"></div>
+      <div className="absolute bottom-0 left-0 right-0 h-[180px] md:h-[160px] pointer-events-none z-30 md:rounded-b-[32px] bg-[#ebebeb]/40 backdrop-blur-md [mask-image:linear-gradient(to_top,black_40%,transparent_100%)] -webkit-[mask-image:linear-gradient(to_top,black_40%,transparent_100%)]"></div>
 
       {/* Floating FAB - Desktop View */}
       {hasAssignments && (

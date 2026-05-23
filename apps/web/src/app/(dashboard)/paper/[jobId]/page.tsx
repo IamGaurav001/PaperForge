@@ -56,10 +56,10 @@ export default function PaperOutputPage() {
   };
 
   return (
-    <div className="flex-1 flex flex-col overflow-y-auto">
+    <div className="flex-1 flex flex-col overflow-y-auto print:overflow-visible">
       <TopNav breadcrumb="Create New" showBack />
 
-      <div className="bg-white md:bg-[#5e5e5e] max-w-[1100px] rounded-[32px] w-full py-2 md:py-6 px-2 md:px-4 mt-8">
+      <div className="bg-white md:bg-[#5e5e5e] print:bg-white max-w-[1100px] print:max-w-none rounded-[32px] print:rounded-none w-full py-2 md:py-6 print:py-0 px-2 md:px-4 print:px-0 mt-8 print:mt-0">
         {/* Dark Banner */}
         <div className="bg-[#262626] text-white rounded-[32px] p-8 mb-2 flex flex-col md:flex-row items-start md:items-center justify-between shadow-sm print:hidden gap-4">
           <p className="text-[15px] font-medium leading-relaxed max-w-3xl">
@@ -75,14 +75,14 @@ export default function PaperOutputPage() {
         </div>
 
         {/* Paper Container */}
-        <div className="bg-white rounded-[32px] p-10 md:p-16 shadow-sm border border-gray-100 font-sans text-gray-900">
+        <div className="bg-white rounded-[32px] print:rounded-none p-10 md:p-16 print:px-16 print:py-12 shadow-sm print:shadow-none border border-gray-100 print:border-none font-sans text-gray-900 print:max-w-4xl print:mx-auto">
           
           <div className="text-center border-b border-gray-300 pb-8 mb-8">
             <h1 className="text-2xl font-bold mb-2">Delhi Public School, Sector-4, Bokaro</h1>
             <h2 className="text-lg font-semibold">Subject: {paper?.title || localJob?.title || "General"}</h2>
             <h3 className="text-lg font-semibold">Class: 5th</h3>
             
-            <div className="flex justify-between items-center mt-8 text-sm font-bold">
+            <div className="flex justify-between items-center mt-8 text-sm font-bold px-4">
               <p>Time Allowed: 45 minutes</p>
               <p>Maximum Marks: 20</p>
             </div>
@@ -122,11 +122,23 @@ export default function PaperOutputPage() {
                   {section.questions.map((q: Question, qIdx: number) => (
                     <div key={qIdx} className="flex gap-2 text-sm leading-relaxed">
                       <span className="font-bold min-w-[20px]">{qIdx + 1}.</span>
-                      <p className="flex-1">
-                        <span className="text-gray-500 mr-1">[{q.difficulty}]</span>
-                        {q.question} 
-                        <span className="text-gray-500 ml-1">[{q.marks} Marks]</span>
-                      </p>
+                      <div className="flex-1">
+                        <p>
+                          <span className="text-gray-500 mr-1">[{q.difficulty}]</span>
+                          {q.question} 
+                          <span className="text-gray-500 ml-1">[{q.marks} Marks]</span>
+                        </p>
+                        {q.options && q.options.length > 0 && (
+                          <div className="mt-3 grid grid-cols-1 md:grid-cols-2 print:grid-cols-2 gap-2">
+                            {q.options.map((opt, oIdx) => (
+                              <div key={oIdx} className="flex gap-2">
+                                <span className="font-semibold text-gray-700">({String.fromCharCode(97 + oIdx)})</span>
+                                <span>{opt}</span>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
                     </div>
                   ))}
                 </div>

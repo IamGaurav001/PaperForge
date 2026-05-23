@@ -8,9 +8,9 @@ export default function DashboardLayout({
 }) {
   return (
     <AuthGuard>
-      <div className="bg-[#ebebeb] text-gray-900 h-[100dvh] w-screen overflow-hidden antialiased flex flex-col md:flex-row p-4 md:p-4 gap-4">
+      <div className="bg-[#ebebeb] print:bg-white text-gray-900 h-[100dvh] print:h-auto w-screen print:w-full overflow-hidden print:overflow-visible antialiased flex print:block flex-col md:flex-row p-4 md:p-4 print:p-0 gap-4 print:gap-0">
         <Sidebar />
-        <main className="flex-1 h-full flex flex-col overflow-hidden relative">
+        <main className="flex-1 h-full print:h-auto flex print:block flex-col overflow-hidden print:overflow-visible relative">
           {children}
         </main>
       </div>

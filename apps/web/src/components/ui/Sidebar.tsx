@@ -19,7 +19,7 @@ export function Sidebar() {
   ];
 
   return (
-    <div className="hidden md:flex w-[304px] h-full bg-white rounded-[32px] shadow-sm flex-col relative shrink-0">
+    <div className="hidden md:flex print:hidden w-[304px] h-full bg-white rounded-[32px] shadow-sm flex-col relative shrink-0">
       {/* Logo */}
       <div className="pt-8 px-[26px] pb-8 flex items-center gap-3 shrink-0">
         <div className="w-10 h-10 rounded-xl bg-[#C23927] flex items-center justify-center relative">

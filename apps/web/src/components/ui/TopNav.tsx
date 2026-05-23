@@ -14,7 +14,7 @@ export function TopNav({ breadcrumb = "Assignment", showBack = true }: TopNavPro
   const router = useRouter();
 
   return (
-    <div className="w-full h-auto flex flex-col justify-center shrink-0 mb-0 md:mb-0">
+    <div className="w-full h-auto flex flex-col justify-center shrink-0 mb-0 md:mb-0 print:hidden">
       <div className="h-[64px] md:h-[56px] w-full bg-white rounded-[20px] md:rounded-[20px] px-4 md:px-6 flex items-center justify-between shadow-sm border border-gray-100 shrink-0">
         
         {/* Desktop Left side */}
