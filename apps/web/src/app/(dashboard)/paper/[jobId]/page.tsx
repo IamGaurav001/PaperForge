@@ -6,6 +6,7 @@ import { JobState, GeneratedPaper, Section, Question } from "@paperforge/types";
 import { TopNav } from "@/components/ui/TopNav";
 import { DownloadCloud, RefreshCw } from "lucide-react";
 import { useJobStore } from "@/store/useJobStore";
+import Script from "next/script";
 
 const getDifficultyBadge = (diff: string) => {
   const d = diff.toLowerCase();
@@ -65,7 +66,10 @@ export default function PaperOutputPage() {
   const handleDownloadPdf = async () => {
     setIsDownloading(true);
     try {
-      const html2pdf = (await import('html2pdf.js')).default;
+      // @ts-ignore
+      const html2pdf = window.html2pdf;
+      if (!html2pdf) throw new Error("html2pdf library not loaded yet");
+      
       const element = document.getElementById('paper-container');
       const opt = {
         margin: 15,
@@ -117,6 +121,7 @@ export default function PaperOutputPage() {
 
   return (
     <>
+      <Script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" strategy="lazyOnload" />
       <TopNav breadcrumb="Create New" showBack />
 
       <div className="flex-1 flex flex-col overflow-y-auto print:overflow-visible">
