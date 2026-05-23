@@ -43,7 +43,7 @@ export default function CreateAssignmentPage() {
   const { register, control, handleSubmit, watch, formState: { errors } } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "New Assignment",
+      title: "",
       subject: "General",
       dueDate: "",
       instructions: "",
@@ -164,6 +164,18 @@ export default function CreateAssignmentPage() {
             <div className="mb-6 md:mb-8">
               <h2 className="text-[20px] font-black text-gray-900 tracking-tight">Assignment Details</h2>
               <p className="text-[13px] text-gray-500 mt-1 font-medium">Basic information about your assignment</p>
+            </div>
+
+            {/* Assignment Name */}
+            <div className="mb-6 md:mb-8">
+              <label className="block text-[14px] font-bold text-gray-900 mb-3">Assignment Name</label>
+              <input 
+                type="text" 
+                placeholder="e.g. Midterm Mathematics Exam"
+                className="w-full px-5 py-3.5 md:py-4 bg-transparent border border-gray-300 rounded-full text-[14px] font-semibold text-gray-900 focus:outline-none focus:border-gray-500 placeholder:text-gray-400"
+                {...register("title")}
+              />
+              {errors.title && <p className="text-xs text-red-500 mt-1 font-medium pl-2">{errors.title.message}</p>}
             </div>
 
             {/* Upload Area */}
