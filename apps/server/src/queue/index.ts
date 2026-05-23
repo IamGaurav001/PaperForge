@@ -1,8 +1,8 @@
 import { Queue, Worker, Job as BullJob } from 'bullmq';
-import { Job } from '../models/Job';
-import { Assignment } from '../models/Assignment';
-import { generateAssessment } from '../services/ai';
-import { io } from '../index';
+import { Job } from '../models/Job.js';
+import { Assignment } from '../models/Assignment.js';
+import { generateAssessment } from '../services/ai.js';
+import { io } from '../index.js';
 import { AssignmentDocument } from '@paperforge/types';
 
 const connection = {

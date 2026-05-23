@@ -24,7 +24,7 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://admin:password@localhost:
   .catch(err => console.error('MongoDB connection error:', err));
 
 // Import routes after io is exported if they need it
-import assignmentRoutes from './routes/assignments';
+import assignmentRoutes from './routes/assignments.js';
 app.use('/api/assignments', assignmentRoutes);
 
 app.get('/health', (req, res) => {

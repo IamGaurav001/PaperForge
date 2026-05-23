@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { Assignment } from '../models/Assignment';
-import { Job } from '../models/Job';
-import { assessmentQueue } from '../queue';
+import { Assignment } from '../models/Assignment.js';
+import { Job } from '../models/Job.js';
+import { assessmentQueue } from '../queue/index.js';
 import { v4 as uuidv4 } from 'uuid';
 
 import multer from 'multer';
