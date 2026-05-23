@@ -27,6 +27,7 @@ export default function PaperOutputPage() {
   const [isRegenerating, setIsRegenerating] = useState(false);
 
   const recentJobs = useJobStore((state) => state.recentJobs);
+  const addJob = useJobStore((state) => state.addJob);
   const localJob = recentJobs.find(j => j.id === jobId);
 
   useEffect(() => {
@@ -42,7 +43,7 @@ export default function PaperOutputPage() {
   if (loading) {
     return (
       <div className="flex flex-col min-h-screen">
-        <TopNav title="Create New" showBack />
+        <TopNav breadcrumb="Create New" showBack />
         <div className="flex justify-center items-center flex-1">
           <div className="w-8 h-8 border-4 border-gray-900 border-t-transparent rounded-full animate-spin" />
         </div>
@@ -53,7 +54,7 @@ export default function PaperOutputPage() {
   if (!job || !job.paper) {
     return (
       <div className="flex flex-col min-h-screen">
-        <TopNav title="Create New" showBack />
+        <TopNav breadcrumb="Create New" showBack />
         <div className="text-center mt-20 text-gray-500 font-medium">
           Paper not found or generation not completed.
         </div>

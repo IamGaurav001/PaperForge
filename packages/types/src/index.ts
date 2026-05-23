@@ -14,6 +14,8 @@ export interface Question {
   question: string;
   difficulty: string;
   marks: number;
+  options?: string[];
+  answer?: string;
 }
 
 export interface Section {
