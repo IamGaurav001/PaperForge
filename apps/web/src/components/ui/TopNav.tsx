@@ -11,8 +11,8 @@ export function TopNav({ breadcrumb = "Assignment", showBack = true }: TopNavPro
   const router = useRouter();
 
   return (
-    <div className="w-screen md:w-auto -mt-4 -ml-4 md:mt-0 md:ml-0 h-[81px] md:h-[56px] px-4 md:px-0 flex flex-col justify-end md:justify-center shrink-0">
-      <div className="h-[56px] w-full bg-white rounded-full px-4 md:px-6 flex items-center justify-between shadow-sm border border-gray-100 shrink-0">
+    <div className="w-full h-auto flex flex-col justify-center shrink-0 mb-0 md:mb-0">
+      <div className="h-[64px] md:h-[56px] w-full bg-white rounded-[20px] md:rounded-[20px] px-4 md:px-6 flex items-center justify-between shadow-sm border border-gray-100 shrink-0">
         
         {/* Desktop Left side */}
         <div className="hidden md:flex items-center gap-4">
@@ -42,28 +42,26 @@ export function TopNav({ breadcrumb = "Assignment", showBack = true }: TopNavPro
         </div>
 
         {/* Mobile Left side */}
-        <div className="flex md:hidden items-center gap-3">
-          <div className="w-[38px] h-[38px] rounded-[12px] bg-[#2B2B2B] flex items-center justify-center shrink-0 shadow-sm">
-            <svg viewBox="0 0 32 32" fill="none" className="w-[22px] h-[22px]">
+        <div className="flex md:hidden items-center gap-2.5">
+          <div className="w-[36px] h-[36px] rounded-[10px] bg-[#2B2B2B] flex items-center justify-center shrink-0 shadow-sm">
+            <svg viewBox="0 0 32 32" fill="none" className="w-[20px] h-[20px]">
               <path d="M26 6L16 28H10L18 6H26Z" fill="#E2E8F0" />
               <path d="M6 6L16 28H10L4 6H6Z" fill="white" />
             </svg>
           </div>
-          <span className="text-[22px] font-extrabold tracking-tight text-[#2B2B2B]">VedaAI</span>
+          <span className="text-[20px] font-extrabold tracking-tight text-[#2B2B2B]">VedaAI</span>
         </div>
 
         {/* Right side (Desktop & Mobile) */}
-        <div className="flex items-center gap-4 md:gap-5 h-full">
-          <button className="w-[42px] h-[42px] md:w-[38px] md:h-[38px] bg-[#F4F4F5] md:bg-[#F9FAFB] flex items-center justify-center relative transition-colors rounded-full hover:bg-gray-200 shrink-0">
-            <div className="relative flex items-center justify-center">
-              <Bell className="w-[22px] h-[22px] md:w-5 md:h-5 text-[#2B2B2B]" strokeWidth={2} />
-              <span className="absolute -top-0.5 -right-0.5 w-[12px] h-[12px] bg-[#FF5733] rounded-full border-2 border-[#F4F4F5] md:border-[#F9FAFB]"></span>
-            </div>
+        <div className="flex items-center gap-2.5 md:gap-5 h-full">
+          <button className="w-[36px] h-[36px] md:w-[38px] md:h-[38px] bg-[#F4F4F5] md:bg-[#F9FAFB] flex items-center justify-center relative transition-colors rounded-full hover:bg-gray-200 shrink-0">
+            <Bell className="w-[20px] h-[20px] md:w-5 md:h-5 text-[#2B2B2B]" strokeWidth={2.5} />
+            <span className="absolute -top-0.5 -right-0.5 md:-top-1 md:-right-1 w-[12px] h-[12px] md:w-[14px] md:h-[14px] bg-[#FF5733] rounded-full border-2 border-[#F4F4F5] md:border-[#F9FAFB]"></span>
           </button>
           
-          <div className="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity h-[42px] md:h-[36px]">
-            <div className="w-[38px] h-[38px] md:w-[34px] md:h-[34px] rounded-full overflow-hidden shrink-0">
-              <img src="https://api.dicebear.com/7.x/notionists/svg?seed=John" alt="User" className="w-full h-full object-cover bg-gray-50" />
+          <div className="flex items-center gap-2.5 md:gap-3 cursor-pointer hover:opacity-80 transition-opacity h-[36px] md:h-[36px]">
+            <div className="w-[36px] h-[36px] md:w-[34px] md:h-[34px] rounded-full overflow-hidden shrink-0">
+              <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop" alt="User" className="w-full h-full object-cover bg-gray-50" />
             </div>
             <span className="text-[15px] font-semibold text-gray-800 hidden md:block">John Doe</span>
             <svg className="w-5 h-5 text-gray-800 shrink-0 hidden md:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">

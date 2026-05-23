@@ -93,7 +93,24 @@ export default function CreateAssignmentPage() {
       if (!res.ok) throw new Error("Failed to queue generation");
 
       const result = await res.json();
-      addJob(result.jobId);
+      
+      // Format current date as DD-MM-YYYY
+      const today = new Date();
+      const dd = String(today.getDate()).padStart(2, '0');
+      const mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+      const yyyy = today.getFullYear();
+      
+      // Format due date from YYYY-MM-DD to DD-MM-YYYY
+      const [dueY, dueM, dueD] = data.dueDate.split('-');
+
+      addJob({
+        id: result.jobId,
+        title: data.title,
+        subject: data.subject,
+        dueDate: `${dueD}-${dueM}-${dueY}`,
+        assignedOn: `${dd}-${mm}-${yyyy}`
+      });
+      
       router.push(`/generate/${result.jobId}`);
     } catch (err: any) {
       setError(err.message || "An error occurred");
@@ -103,24 +120,38 @@ export default function CreateAssignmentPage() {
 
   return (
     <>
-      <TopNav breadcrumb="Assignment" showBack />
+      <TopNav breadcrumb="Assignment" showBack={true} />
       
-      <div className="flex-1 w-full overflow-y-auto pb-32">
-        <div className="max-w-3xl mx-auto w-full pt-4">
-          <div className="mb-8 shrink-0 px-2 flex items-start gap-3">
-            <div className="mt-2 w-2 h-2 rounded-full bg-green-500 shrink-0"></div>
-            <div className="flex flex-col">
-              <h2 className="text-[20px] font-bold text-gray-900 leading-tight">
-                Create Assignment
-              </h2>
-              <p className="text-[12px] text-gray-400 mt-0.5">Set up a new assignment for your students</p>
-            </div>
+      <div className="flex-1 w-full overflow-y-auto pb-32 pt-2 md:pt-6 px-4 md:px-0 flex flex-col items-center">
+        
+        {/* Desktop Header (Hidden on Mobile) */}
+        <div className="hidden md:flex w-full max-w-3xl mb-8 shrink-0 px-2 items-start gap-3">
+          <div className="mt-2 w-2.5 h-2.5 rounded-full bg-green-500 shrink-0 shadow-[0_0_8px_rgba(34,197,94,0.5)]"></div>
+          <div className="flex flex-col">
+            <h2 className="text-[22px] font-bold text-gray-900 leading-tight">
+              Create Assignment
+            </h2>
+            <p className="text-[13px] font-medium text-gray-400 mt-1">Set up a new assignment for your students</p>
           </div>
+        </div>
 
-          {/* Progress Bar */}
-          <div className="flex gap-4 w-full mb-8 shrink-0 px-2">
-            <div className="flex-1 bg-gray-600 h-1 rounded-full"></div>
-            <div className="flex-1 bg-gray-200 h-1 rounded-full"></div>
+        {/* Desktop Progress Bar (Hidden on Mobile) */}
+        <div className="hidden md:flex gap-2 w-full max-w-3xl mb-10 shrink-0 px-2">
+          <div className="w-1/2 bg-[#5E5E5E] h-[4px] rounded-full"></div>
+          <div className="w-1/2 bg-[#D1D5DB] h-[4px] rounded-full"></div>
+        </div>
+
+        {/* Main Form Container */}
+        <div className="bg-[#e8e8e8] w-full max-w-3xl rounded-[32px] p-5 md:p-10 flex flex-col relative shadow-[inset_0_2px_10px_rgba(0,0,0,0.02)]">
+          
+          {/* Mobile Header & Progress (Hidden on Desktop) */}
+          <div className="flex md:hidden items-center justify-center relative mb-5">
+            <h2 className="text-[16px] font-bold text-gray-900 tracking-tight">Create Assignment</h2>
+          </div>
+          
+          <div className="flex md:hidden gap-2 w-full mb-8">
+            <div className="w-1/2 bg-[#5E5E5E] h-1.5 rounded-full"></div>
+            <div className="w-1/2 bg-white h-1.5 rounded-full"></div>
           </div>
 
           {error && (
@@ -129,150 +160,159 @@ export default function CreateAssignmentPage() {
             </div>
           )}
 
-          <form onSubmit={handleSubmit(onSubmit)} className="bg-[#f5f5f5] rounded-[32px] p-8 lg:p-10 shadow-sm border border-gray-100">
-          <div className="mb-8">
-            <h2 className="text-xl font-bold text-gray-900">Assignment Details</h2>
-            <p className="text-[13px] text-gray-500 mt-1">Basic information about your assignment</p>
-          </div>
-
-          {/* Upload Area */}
-          <div className="border border-dashed border-gray-300 rounded-[24px] p-8 flex flex-col items-center justify-center bg-white mb-2 relative shadow-sm">
-            <input 
-              type="file" 
-              accept="image/jpeg, image/png, application/pdf"
-              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-              onChange={(e) => {
-                if (e.target.files && e.target.files.length > 0) {
-                  setFile(e.target.files[0]);
-                }
-              }}
-            />
-            <UploadCloud className="w-6 h-6 text-gray-800 mb-3" />
-            {file ? (
-              <div className="flex flex-col items-center z-10">
-                <p className="text-[13px] font-bold text-gray-900 bg-gray-50 px-3 py-1 rounded-full border shadow-sm">{file.name}</p>
-                <button 
-                  type="button" 
-                  onClick={(e) => { e.preventDefault(); setFile(null); }} 
-                  className="mt-3 px-4 py-1.5 text-xs font-semibold text-red-600 bg-red-50 rounded-full hover:bg-red-100 relative z-20"
-                >
-                  Remove File
-                </button>
-              </div>
-            ) : (
-              <>
-                <p className="text-[13px] font-bold text-gray-900 pointer-events-none">Choose a file or drag & drop it here</p>
-                <p className="text-[11px] text-gray-400 mb-4 mt-1 pointer-events-none">JPEG, PNG, upto 10MB</p>
-                <button type="button" className="px-5 py-2 rounded-full text-[13px] font-bold text-gray-700 bg-gray-100 pointer-events-none">
-                  Browse Files
-                </button>
-              </>
-            )}
-          </div>
-          <p className="text-[12px] text-gray-500 text-center mb-8">Upload images of your preferred document/image</p>
-
-          {/* Due Date */}
-          <div className="mb-8">
-            <label className="block text-[13px] font-bold text-gray-900 mb-2">Due Date</label>
-            <input 
-              type="date" 
-              className="w-full px-4 py-3 bg-transparent border border-gray-200 rounded-full text-[13px] font-medium text-gray-700 focus:outline-none focus:border-gray-300"
-              {...register("dueDate")}
-            />
-            {errors.dueDate && <p className="text-xs text-red-500 mt-1">{errors.dueDate.message}</p>}
-          </div>
-
-          {/* Question Types */}
-          <div className="mb-6">
-            <div className="flex items-center justify-between mb-4 px-1">
-              <label className="text-[13px] font-bold text-gray-900">Question Type</label>
-              <div className="flex gap-14 pr-2">
-                <span className="text-[12px] font-bold text-gray-900">No. of Questions</span>
-                <span className="text-[12px] font-bold text-gray-900">Marks</span>
-              </div>
+          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col bg-#f5f5f5">
+            <div className="mb-6 md:mb-8">
+              <h2 className="text-[20px] font-black text-gray-900 tracking-tight">Assignment Details</h2>
+              <p className="text-[13px] text-gray-500 mt-1 font-medium">Basic information about your assignment</p>
             </div>
 
-            <div className="space-y-3 mb-6">
-              {fields.map((field, index) => (
-                <div key={field.id} className="flex items-center justify-between gap-3">
-                  <div className="relative flex-1">
-                    <select 
-                      className="w-full appearance-none px-4 py-3 bg-white rounded-full text-[13px] font-semibold text-gray-700 focus:outline-none shadow-sm"
-                      {...register(`questionTypes.${index}.type`)}
-                    >
-                      {AVAILABLE_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
-                    </select>
-                    <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
-                      <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                      </svg>
-                    </div>
-                  </div>
-                  
-                  <button type="button" onClick={() => remove(index)} className="text-gray-500 hover:text-gray-800 p-1 font-bold">
-                    <X className="w-3 h-3" strokeWidth={3} />
-                  </button>
-
-                  <div className="flex items-center gap-4">
-                    {/* Count Stepper */}
-                    <div className="flex items-center bg-white rounded-full px-3 py-1.5 shadow-sm">
-                      <button type="button" onClick={() => update(index, { ...watchQuestionTypes[index], count: Math.max(1, watchQuestionTypes[index].count - 1) })} className="w-4 h-4 flex items-center justify-center text-gray-400 hover:text-gray-900 text-lg font-medium">−</button>
-                      <span className="w-8 text-center text-[13px] font-bold">{watchQuestionTypes[index]?.count || 0}</span>
-                      <button type="button" onClick={() => update(index, { ...watchQuestionTypes[index], count: watchQuestionTypes[index].count + 1 })} className="w-4 h-4 flex items-center justify-center text-gray-400 hover:text-gray-900 text-lg font-medium">+</button>
-                    </div>
-
-                    {/* Marks Stepper */}
-                    <div className="flex items-center bg-white rounded-full px-3 py-1.5 shadow-sm">
-                      <button type="button" onClick={() => update(index, { ...watchQuestionTypes[index], marks: Math.max(1, watchQuestionTypes[index].marks - 1) })} className="w-4 h-4 flex items-center justify-center text-gray-400 hover:text-gray-900 text-lg font-medium">−</button>
-                      <span className="w-8 text-center text-[13px] font-bold">{watchQuestionTypes[index]?.marks || 0}</span>
-                      <button type="button" onClick={() => update(index, { ...watchQuestionTypes[index], marks: watchQuestionTypes[index].marks + 1 })} className="w-4 h-4 flex items-center justify-center text-gray-400 hover:text-gray-900 text-lg font-medium">+</button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <button 
-              type="button" 
-              onClick={() => append({ type: "Multiple Choice Questions", count: 1, marks: 1 })}
-              className="flex items-center gap-2 text-[12px] font-bold text-gray-900 hover:opacity-80 transition-opacity"
-            >
-              <div className="w-6 h-6 rounded-full bg-gray-900 text-white flex items-center justify-center">
-                <Plus className="w-4 h-4" />
-              </div>
-              Add Question Type
-            </button>
-          </div>
-
-          <div className="flex flex-col items-end mb-8 pt-2">
-            <p className="text-[13px] font-bold text-gray-900">Total Questions : {totalQuestions}</p>
-            <p className="text-[13px] font-bold text-gray-900 mt-1">Total Marks : {totalMarks}</p>
-          </div>
-
-          {/* Additional Information */}
-          <div className="mb-4">
-            <label className="block text-[13px] font-bold text-gray-900 mb-2">Additional Information (For better output)</label>
-            <div className="relative">
-              <textarea 
-                className="w-full px-4 py-4 bg-transparent border border-dashed border-gray-300 rounded-[24px] text-[13px] min-h-[100px] resize-none focus:outline-none focus:border-gray-400 placeholder:text-gray-400"
-                placeholder="e.g Generate a question paper for 3 hour exam duration..."
-                {...register("instructions")}
+            {/* Upload Area */}
+            <div className="border-[1.5px] border-dashed border-gray-300 rounded-[28px] p-8 md:p-12 flex flex-col items-center justify-center bg-transparent mb-3 relative group hover:border-gray-400 transition-colors">
+              <input 
+                type="file" 
+                accept="image/jpeg, image/png, application/pdf"
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                onChange={(e) => {
+                  if (e.target.files && e.target.files.length > 0) {
+                    setFile(e.target.files[0]);
+                  }
+                }}
               />
-              <button type="button" className="absolute bottom-4 right-4 text-gray-800 p-1 hover:text-black">
-                <Mic className="w-4 h-4" />
+              <div className="w-10 h-10 rounded-full flex items-center justify-center mb-3">
+                <UploadCloud className="w-6 h-6 text-gray-900" />
+              </div>
+              {file ? (
+                <div className="flex flex-col items-center relative z-20">
+                  <p className="text-[13px] font-bold text-gray-900 bg-white px-4 py-2 rounded-full shadow-sm">{file.name}</p>
+                  <button 
+                    type="button" 
+                    onClick={(e) => { e.preventDefault(); setFile(null); }} 
+                    className="mt-3 px-5 py-2 text-[12px] font-bold text-red-600 bg-red-50 rounded-full hover:bg-red-100 shadow-sm"
+                  >
+                    Remove File
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <p className="text-[14px] font-semibold text-gray-900 text-center leading-snug">Choose a file or <span className="font-black">drag & drop it here</span></p>
+                  <p className="text-[11px] font-medium text-gray-400 mb-5 mt-1 text-center">JPEG, PNG, upto 10MB</p>
+                  <button type="button" className="px-6 py-2.5 rounded-full text-[13px] font-bold text-gray-800 bg-white shadow-sm pointer-events-none">
+                    Browse Files
+                  </button>
+                </>
+              )}
+            </div>
+            <p className="text-[12px] font-medium text-gray-500 text-center mb-8 md:mb-10">Upload images of your preferred document/image</p>
+
+            {/* Due Date */}
+            <div className="mb-8 md:mb-10">
+              <label className="block text-[14px] font-bold text-gray-900 mb-3">Due Date</label>
+              <div className="relative">
+                <input 
+                  type="date" 
+                  className="w-full px-5 py-3.5 md:py-4 bg-transparent border border-gray-300 rounded-full text-[14px] font-semibold text-gray-700 focus:outline-none focus:border-gray-500"
+                  {...register("dueDate")}
+                />
+              </div>
+              {errors.dueDate && <p className="text-xs text-red-500 mt-1 font-medium pl-2">{errors.dueDate.message}</p>}
+            </div>
+
+            {/* Question Types */}
+            <div className="mb-8">
+              <div className="flex items-center justify-between mb-4 md:mb-6">
+                <label className="text-[14px] font-bold text-gray-900">Question Type</label>
+                <div className="hidden md:flex gap-16 pr-6">
+                  <span className="text-[12px] font-bold text-gray-600">No. of Questions</span>
+                  <span className="text-[12px] font-bold text-gray-600">Marks</span>
+                </div>
+              </div>
+
+              <div className="space-y-4 md:space-y-3 mb-6">
+                {fields.map((field, index) => (
+                  <div key={field.id} className="bg-white md:bg-transparent rounded-[24px] md:rounded-none p-4 md:p-0 shadow-sm md:shadow-none flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-6">
+                    
+                    {/* Dropdown & X */}
+                    <div className="flex items-center justify-between md:flex-1 w-full md:w-auto">
+                      <div className="relative w-full md:max-w-[320px]">
+                        <select 
+                          className="w-full appearance-none bg-transparent md:bg-white md:rounded-full md:px-5 py-2.5 md:py-3.5 text-[13px] font-bold text-gray-900 focus:outline-none cursor-pointer pr-8 md:shadow-sm"
+                          {...register(`questionTypes.${index}.type`)}
+                        >
+                          {AVAILABLE_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
+                        </select>
+                        <div className="absolute inset-y-0 right-1 md:right-4 flex items-center pointer-events-none">
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                      </div>
+                      <button type="button" onClick={() => remove(index)} className="text-gray-900 md:text-gray-500 hover:text-gray-600 p-1 md:ml-4 flex-shrink-0">
+                        <X className="w-4 h-4" strokeWidth={2.5} />
+                      </button>
+                    </div>
+
+                    {/* Steppers Mobile (Stacked) vs Desktop (Row) */}
+                    <div className="bg-[#F8F9FA] md:bg-transparent rounded-[20px] md:rounded-none py-3 px-4 md:p-0 flex justify-between items-center md:gap-10 w-full md:w-auto mt-3 md:mt-0">
+                      <div className="flex flex-col md:flex-row items-center w-1/2 md:w-auto relative after:content-[''] after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:h-8 after:w-[1px] after:bg-gray-200 md:after:hidden">
+                        <span className="text-[11px] font-bold text-gray-600 mb-2 md:hidden">No. of Questions</span>
+                        <div className="flex items-center justify-between w-[90%] md:w-[110px] bg-white rounded-full px-2 py-1.5 md:py-2 shadow-sm">
+                          <button type="button" onClick={() => update(index, { ...watchQuestionTypes[index], count: Math.max(1, watchQuestionTypes[index].count - 1) })} className="w-6 md:w-8 h-6 flex items-center justify-center text-gray-400 hover:text-gray-900 text-lg font-medium">−</button>
+                          <span className="text-[13px] font-black">{watchQuestionTypes[index]?.count || 0}</span>
+                          <button type="button" onClick={() => update(index, { ...watchQuestionTypes[index], count: watchQuestionTypes[index].count + 1 })} className="w-6 md:w-8 h-6 flex items-center justify-center text-gray-400 hover:text-gray-900 text-lg font-medium">+</button>
+                        </div>
+                      </div>
+
+                      <div className="flex flex-col md:flex-row items-center w-1/2 md:w-auto">
+                        <span className="text-[11px] font-bold text-gray-600 mb-2 md:hidden">Marks</span>
+                        <div className="flex items-center justify-between w-[90%] md:w-[110px] bg-white rounded-full px-2 py-1.5 md:py-2 shadow-sm">
+                          <button type="button" onClick={() => update(index, { ...watchQuestionTypes[index], marks: Math.max(1, watchQuestionTypes[index].marks - 1) })} className="w-6 md:w-8 h-6 flex items-center justify-center text-gray-400 hover:text-gray-900 text-lg font-medium">−</button>
+                          <span className="text-[13px] font-black">{watchQuestionTypes[index]?.marks || 0}</span>
+                          <button type="button" onClick={() => update(index, { ...watchQuestionTypes[index], marks: watchQuestionTypes[index].marks + 1 })} className="w-6 md:w-8 h-6 flex items-center justify-center text-gray-400 hover:text-gray-900 text-lg font-medium">+</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <button 
+                type="button" 
+                onClick={() => append({ type: "Multiple Choice Questions", count: 1, marks: 1 })}
+                className="flex items-center gap-3 text-[13px] font-extrabold text-gray-900 hover:opacity-80 transition-opacity ml-1 md:mt-6"
+              >
+                <div className="w-7 h-7 rounded-full bg-[#1A1A1A] text-white flex items-center justify-center">
+                  <Plus className="w-4 h-4" strokeWidth={3} />
+                </div>
+                Add Question Type
               </button>
             </div>
-          </div>
 
-          {/* Hidden fields removed as they are now handled by defaultValues */}
-        </form>
+            <div className="flex flex-col items-end mb-8 md:mb-10 pt-2 md:pt-4 pr-2">
+              <p className="text-[13px] font-bold text-gray-900">Total Questions : {totalQuestions}</p>
+              <p className="text-[13px] font-bold text-gray-900 mt-1">Total Marks : {totalMarks}</p>
+            </div>
 
-        {/* Bottom Actions */}
-        <div className="py-6 flex justify-between items-center">
+            {/* Additional Information (Desktop specific) */}
+            <div className="hidden md:block mb-4">
+              <label className="block text-[14px] font-bold text-gray-900 mb-4">Additional Information (For better output)</label>
+              <div className="relative">
+                <textarea 
+                  className="w-full px-5 py-5 bg-[#F4F4F5] border border-dashed border-gray-300 rounded-[28px] text-[13px] font-medium min-h-[120px] resize-none focus:outline-none focus:border-gray-400 placeholder:text-gray-400"
+                  placeholder="e.g Generate a question paper for 3 hour exam duration..."
+                  {...register("instructions")}
+                />
+                <button type="button" className="absolute bottom-5 right-5 text-gray-900 p-2 bg-white rounded-full shadow-sm hover:bg-gray-50 transition-colors">
+                  <Mic className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        {/* Bottom Actions Outside Form Container */}
+        <div className="mt-8 flex justify-center items-center gap-4 w-full px-4 relative z-20">
           <button 
             type="button" 
             onClick={() => router.back()}
-            className="flex items-center gap-2 px-6 py-3 bg-white border border-gray-200 rounded-full text-sm font-bold text-gray-700 hover:bg-gray-50 shadow-sm"
+            className="flex items-center justify-center gap-2 px-6 py-3.5 min-w-[140px] bg-white rounded-full text-[14px] font-bold text-gray-800 shadow-[0_2px_10px_rgba(0,0,0,0.05)] hover:bg-gray-50"
           >
             <ArrowLeft className="w-4 h-4" />
             Previous
@@ -282,12 +322,11 @@ export default function CreateAssignmentPage() {
             type="button" 
             onClick={handleSubmit(onSubmit)}
             disabled={isLoading}
-            className="flex items-center gap-2 px-8 py-3 bg-gray-900 text-white rounded-full text-sm font-bold shadow-lg hover:bg-black transition-colors"
+            className="flex items-center justify-center gap-2 px-8 py-3.5 min-w-[140px] bg-[#1A1A1A] text-white rounded-full text-[14px] font-bold shadow-lg hover:bg-black transition-colors"
           >
             {isLoading ? "Generating..." : "Next"}
             {!isLoading && <ArrowRight className="w-4 h-4" />}
           </button>
-        </div>
         </div>
       </div>
     </>

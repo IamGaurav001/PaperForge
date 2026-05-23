@@ -23,7 +23,6 @@ export default function RootLayout({
         <main className="flex-1 h-full flex flex-col overflow-hidden relative">
           {children}
         </main>
-        <MobileNav />
       </body>
     </html>
   );

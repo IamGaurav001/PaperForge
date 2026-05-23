@@ -37,7 +37,7 @@ export function Sidebar() {
                 <path d="M10 2L11.8 7.8L17.6 9.6L11.8 11.4L10 17.2L8.2 11.4L2.4 9.6L8.2 7.8L10 2Z" />
                 <path d="M19 14L19.9 16.9L22.8 17.8L19.9 18.7L19 21.6L18.1 18.7L15.2 17.8L18.1 16.9L19 14Z" />
               </svg>
-              AI Teacher's Toolkit
+              Create Assignment
             </button>
           </div>
         </Link>
@@ -55,7 +55,7 @@ export function Sidebar() {
                   {item.name}
                 </span>
                 {item.name === 'Assignments' && (
-                  <span className="bg-[#FF5733] text-white text-[10px] font-bold px-2 py-0.5 rounded-full leading-none">32</span>
+                  <span className="bg-[#FF5733] text-white text-[10px] font-bold px-2 py-0.5 rounded-full leading-none">10</span>
                 )}
               </div>
             </Link>
