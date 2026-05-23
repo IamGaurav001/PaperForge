@@ -29,7 +29,7 @@ export default function PaperOutputPage() {
   const localJob = recentJobs.find(j => j.id === jobId);
 
   useEffect(() => {
-    fetch(`http://localhost:3001/api/assignments/job/${jobId}`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/api/assignments/job/${jobId}`)
       .then(res => res.json())
       .then(data => {
         setJob(data);
@@ -88,7 +88,7 @@ export default function PaperOutputPage() {
     if (!job) return;
     setIsRegenerating(true);
     try {
-      const res = await fetch(`http://localhost:3001/api/assignments/regenerate/${jobId}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/api/assignments/regenerate/${jobId}`, {
         method: "POST"
       });
 

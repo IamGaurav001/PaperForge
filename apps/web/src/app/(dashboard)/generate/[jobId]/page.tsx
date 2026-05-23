@@ -18,8 +18,8 @@ export default function GenerateStatusPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // In a real app, URL comes from env
-    const socket = io("http://localhost:3001");
+    // Use environment variable for backend URL in production, fallback to localhost for dev
+    const socket = io(process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001");
 
     socket.on("connect", () => {
       console.log("Connected to WebSocket");
@@ -42,7 +42,7 @@ export default function GenerateStatusPage() {
     });
 
     // Initial fetch in case socket missed the initial state
-    fetch(`http://localhost:3001/api/assignments/job/${jobId}`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/api/assignments/job/${jobId}`)
       .then(res => res.json())
       .then(data => {
         if (data.status) {

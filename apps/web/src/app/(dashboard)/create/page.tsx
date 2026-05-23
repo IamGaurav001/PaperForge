@@ -85,7 +85,7 @@ export default function CreateAssignmentPage() {
         formData.append("file", file);
       }
 
-      const res = await fetch("http://localhost:3001/api/assignments/generate", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/api/assignments/generate`, {
         method: "POST",
         body: formData,
       });
