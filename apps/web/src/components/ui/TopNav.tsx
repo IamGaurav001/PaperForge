@@ -1,6 +1,9 @@
+"use client";
+
 import { Bell, ArrowLeft, Menu } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useSessionStore } from '@/store/useSessionStore';
 
 export interface TopNavProps {
   breadcrumb?: string;
@@ -63,7 +66,9 @@ export function TopNav({ breadcrumb = "Assignment", showBack = true }: TopNavPro
             <div className="w-[36px] h-[36px] md:w-[34px] md:h-[34px] rounded-full overflow-hidden shrink-0">
               <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop" alt="User" className="w-full h-full object-cover bg-gray-50" />
             </div>
-            <span className="text-[15px] font-semibold text-gray-800 hidden md:block">John Doe</span>
+            <span className="text-[15px] font-semibold text-gray-800 hidden md:block">
+              {useSessionStore((state) => state.teacherName) || 'Teacher'}
+            </span>
             <svg className="w-5 h-5 text-gray-800 shrink-0 hidden md:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
             </svg>

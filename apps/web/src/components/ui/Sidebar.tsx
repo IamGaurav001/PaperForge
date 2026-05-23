@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { LayoutGrid, Contact, FileText, Book, History, Settings } from 'lucide-react';
 import { usePathname } from 'next/navigation';
+import { useJobStore } from '@/store/useJobStore';
 
 export function Sidebar() {
   const pathname = usePathname();
@@ -54,8 +55,8 @@ export function Sidebar() {
                 <span className={`text-[14px] ${isActive ? 'font-bold text-gray-900' : 'font-medium text-gray-500'} flex-1`}>
                   {item.name}
                 </span>
-                {item.name === 'Assignments' && (
-                  <span className="bg-[#FF5733] text-white text-[10px] font-bold px-2 py-0.5 rounded-full leading-none">10</span>
+                {item.name === 'Assignments' && useJobStore((state) => state.recentJobs).length > 0 && (
+                  <span className="bg-[#FF5733] text-white text-[10px] font-bold px-2 py-0.5 rounded-full leading-none">{useJobStore((state) => state.recentJobs).length}</span>
                 )}
               </div>
             </Link>
