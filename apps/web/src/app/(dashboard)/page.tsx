@@ -34,7 +34,7 @@ export default function AssignmentsPage() {
     <>
       <TopNav showBack={false} />
       
-      <div className="flex-1 flex flex-col overflow-y-auto px-1 md:px-0 py-2 md:py-8 h-full relative [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+      <div className="flex-1 flex flex-col overflow-y-auto px-1 md:px-0 py-2 md:py-8 h-full relative">
         {hasAssignments ? (
           <>
             {/* Desktop Header */}
