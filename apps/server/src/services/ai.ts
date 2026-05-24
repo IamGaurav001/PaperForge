@@ -1,5 +1,6 @@
 import { GoogleGenAI } from '@google/genai';
 import { AssignmentDocument } from '@paperforge/types';
+import * as fs from 'fs';
 
 export const generateAssessment = async (assignment: AssignmentDocument) => {
   const ai = new GoogleGenAI({
@@ -38,7 +39,6 @@ Ensure the total number of questions exactly matches ${assignment.numberOfQuesti
     let contents: any[] = [{ text: prompt }];
 
     if (assignment.filePath && assignment.fileMimeType) {
-      const fs = require('fs');
       if (fs.existsSync(assignment.filePath)) {
         const fileBytes = fs.readFileSync(assignment.filePath);
         const base64Data = fileBytes.toString('base64');

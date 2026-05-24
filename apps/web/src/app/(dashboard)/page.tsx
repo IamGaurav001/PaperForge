@@ -12,7 +12,11 @@ export default function AssignmentsPage() {
   const { recentJobs, removeJob } = useJobStore();
   const [hasAssignments, setHasAssignments] = useState(false);
   const [openDropdownId, setOpenDropdownId] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filterOption, setFilterOption] = useState<"Newest" | "Oldest">("Newest");
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const filterRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -25,10 +29,29 @@ export default function AssignmentsPage() {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setOpenDropdownId(null);
       }
+      if (filterRef.current && !filterRef.current.contains(event.target as Node)) {
+        setIsFilterOpen(false);
+      }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  // Normalize jobs first so that string-based jobs keep their original index-based title
+  const normalizedJobs = recentJobs.map((job: any, index: number) => ({
+    id: typeof job === 'string' ? job : job.id,
+    title: typeof job === 'string' ? `Quiz on Electricity ${index > 0 ? `(${index + 1})` : ''}` : job.title,
+    assignedOn: typeof job === 'string' ? "20-06-2025" : (job.assignedOn || "20-06-2025"),
+    dueDate: typeof job === 'string' ? "21-06-2025" : (job.dueDate || "21-06-2025"),
+  }));
+
+  let filteredJobs = normalizedJobs.filter((job) => {
+    return job.title.toLowerCase().includes(searchQuery.toLowerCase());
+  });
+
+  if (filterOption === "Oldest") {
+    filteredJobs = filteredJobs.reverse();
+  }
 
   return (
     <>
@@ -57,10 +80,32 @@ export default function AssignmentsPage() {
             </div>
 
             {/* Desktop Filters Bar */}
-            <div className="hidden md:flex w-full bg-white rounded-[22px] py-4 px-6 items-center justify-between shadow-sm mb-4">
-              <div className="flex items-center gap-2 text-gray-400 cursor-pointer pl-2 hover:text-gray-600 transition-colors">
+            <div className="hidden md:flex w-full bg-white rounded-[22px] py-4 px-6 items-center justify-between shadow-sm mb-4 relative z-10" ref={filterRef}>
+              <div 
+                className="flex items-center gap-2 text-gray-400 cursor-pointer pl-2 hover:text-gray-600 transition-colors relative"
+                onClick={() => setIsFilterOpen(!isFilterOpen)}
+              >
                 <Filter className="w-5 h-5" />
-                <span className="text-[15px] font-semibold text-gray-500">Filter By</span>
+                <span className="text-[15px] font-semibold text-gray-500">
+                  Filter By {filterOption === "Oldest" ? "(Oldest)" : "(Newest)"}
+                </span>
+                
+                {isFilterOpen && (
+                  <div className="absolute top-8 left-0 w-48 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-20 flex flex-col">
+                    <button 
+                      onClick={() => setFilterOption("Newest")} 
+                      className={`text-left px-4 py-2 text-[13px] font-semibold transition-colors ${filterOption === "Newest" ? "bg-gray-100 text-gray-900" : "hover:bg-gray-50 text-gray-600"}`}
+                    >
+                      Newest First
+                    </button>
+                    <button 
+                      onClick={() => setFilterOption("Oldest")} 
+                      className={`text-left px-4 py-2 text-[13px] font-semibold transition-colors ${filterOption === "Oldest" ? "bg-gray-100 text-gray-900" : "hover:bg-gray-50 text-gray-600"}`}
+                    >
+                      Oldest First
+                    </button>
+                  </div>
+                )}
               </div>
               
               <div className="relative w-[400px]">
@@ -68,16 +113,40 @@ export default function AssignmentsPage() {
                 <input 
                   type="text" 
                   placeholder="Search Assignment" 
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full pl-11 pr-4 py-2.5 bg-white border border-gray-200 rounded-full text-[14px] font-semibold text-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-200"
                 />
               </div>
             </div>
 
             {/* Mobile Filters Bar */}
-            <div className="flex md:hidden w-full bg-white rounded-full py-3.5 px-5 items-center justify-between shadow-sm mb-5">
-              <div className="flex items-center gap-2 text-gray-400 cursor-pointer pl-1 hover:text-gray-600 transition-colors">
+            <div className="flex md:hidden w-full bg-white rounded-full py-3.5 px-5 items-center justify-between shadow-sm mb-5 relative z-10" ref={filterRef}>
+              <div 
+                className="flex items-center gap-2 text-gray-400 cursor-pointer pl-1 hover:text-gray-600 transition-colors relative"
+                onClick={() => setIsFilterOpen(!isFilterOpen)}
+              >
                 <Filter className="w-4 h-4" />
-                <span className="text-[14px] font-medium text-gray-400">Filter</span>
+                <span className="text-[14px] font-medium text-gray-400">
+                  Filter {filterOption === "Oldest" ? "(Oldest)" : ""}
+                </span>
+                
+                {isFilterOpen && (
+                  <div className="absolute top-8 left-0 w-40 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-20 flex flex-col">
+                    <button 
+                      onClick={() => setFilterOption("Newest")} 
+                      className={`text-left px-4 py-2 text-[13px] font-semibold transition-colors ${filterOption === "Newest" ? "bg-gray-100 text-gray-900" : "hover:bg-gray-50 text-gray-600"}`}
+                    >
+                      Newest First
+                    </button>
+                    <button 
+                      onClick={() => setFilterOption("Oldest")} 
+                      className={`text-left px-4 py-2 text-[13px] font-semibold transition-colors ${filterOption === "Oldest" ? "bg-gray-100 text-gray-900" : "hover:bg-gray-50 text-gray-600"}`}
+                    >
+                      Oldest First
+                    </button>
+                  </div>
+                )}
               </div>
               <div className="w-[1.5px] h-4 bg-gray-200 mx-3"></div>
               <div className="flex items-center gap-2 flex-1">
@@ -85,6 +154,8 @@ export default function AssignmentsPage() {
                 <input 
                   type="text" 
                   placeholder="Search Name" 
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full bg-transparent text-[14px] font-medium text-gray-700 placeholder:text-gray-400 focus:outline-none"
                 />
               </div>
@@ -92,52 +163,54 @@ export default function AssignmentsPage() {
 
             {/* Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-3 pb-40 md:pb-32">
-              {recentJobs.map((job: any, index) => {
-                const jobId = typeof job === 'string' ? job : job.id;
-                const jobTitle = typeof job === 'string' ? `Quiz on Electricity ${index > 0 ? `(${index + 1})` : ''}` : job.title;
-                const jobAssigned = typeof job === 'string' ? "20-06-2025" : (job.assignedOn || "20-06-2025");
-                const jobDue = typeof job === 'string' ? "21-06-2025" : (job.dueDate || "21-06-2025");
-                
-                return (
-                <div 
-                  key={jobId || index} 
-                  className="bg-white rounded-[32px] md:rounded-[28px] p-6 md:p-8 border border-gray-100 shadow-sm relative group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer"
-                  onClick={() => router.push(`/paper/${jobId}`)}
-                >
-                  <div className="flex justify-between items-start mb-5 md:mb-16">
-                    <h3 className="text-[18px] md:text-[22px] font-black tracking-tight text-gray-900 group-hover:underline">{jobTitle}</h3>
-                    <div className="relative">
-                      <button 
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setOpenDropdownId(openDropdownId === jobId ? null : jobId);
-                        }}
-                        className="text-gray-900 hover:bg-gray-100 p-1 rounded-full transition-all hover:scale-110 active:scale-95"
-                      >
-                        <MoreVertical className="w-5 h-5" />
-                      </button>
-                      
-                      {openDropdownId === jobId && (
-                        <div 
-                          ref={dropdownRef}
-                          className="absolute right-0 top-8 w-40 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-20 flex flex-col"
+              {filteredJobs.length > 0 ? (
+                filteredJobs.map((job) => {
+                  return (
+                  <div 
+                    key={job.id} 
+                    className="bg-white rounded-[32px] md:rounded-[28px] p-6 md:p-8 border border-gray-100 shadow-sm relative group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer"
+                    onClick={() => router.push(`/paper/${job.id}`)}
+                  >
+                    <div className="flex justify-between items-start mb-5 md:mb-16">
+                      <h3 className="text-[18px] md:text-[22px] font-black tracking-tight text-gray-900 group-hover:underline">{job.title}</h3>
+                      <div className="relative">
+                        <button 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setOpenDropdownId(openDropdownId === job.id ? null : job.id);
+                          }}
+                          className="text-gray-900 hover:bg-gray-100 p-1 rounded-full transition-all hover:scale-110 active:scale-95"
                         >
-                          <button onClick={(e) => { e.stopPropagation(); router.push(`/paper/${jobId}`); }} className="text-left px-4 py-2 text-[13px] font-semibold hover:bg-gray-50 text-gray-900 transition-colors">
-                            View Assignment
-                          </button>
-                          <button onClick={(e) => { e.stopPropagation(); removeJob(jobId); setOpenDropdownId(null); }} className="text-left px-4 py-2 text-[13px] font-semibold hover:bg-red-50 text-red-600 transition-colors">
-                            Delete
-                          </button>
-                        </div>
-                      )}
+                          <MoreVertical className="w-5 h-5" />
+                        </button>
+                        
+                        {openDropdownId === job.id && (
+                          <div 
+                            ref={dropdownRef}
+                            className="absolute right-0 top-8 w-40 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-20 flex flex-col"
+                          >
+                            <button onClick={(e) => { e.stopPropagation(); router.push(`/paper/${job.id}`); }} className="text-left px-4 py-2 text-[13px] font-semibold hover:bg-gray-50 text-gray-900 transition-colors">
+                              View Assignment
+                            </button>
+                            <button onClick={(e) => { e.stopPropagation(); removeJob(job.id); setOpenDropdownId(null); }} className="text-left px-4 py-2 text-[13px] font-semibold hover:bg-red-50 text-red-600 transition-colors">
+                              Delete
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3 text-[12px] md:text-[13px] text-gray-500">
+                      <p><span className="font-bold text-gray-900">Assigned on :</span> <span className="font-medium">{job.assignedOn}</span></p>
+                      <p><span className="font-bold text-gray-900">Due :</span> <span className="font-medium">{job.dueDate}</span></p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3 text-[12px] md:text-[13px] text-gray-500">
-                    <p><span className="font-bold text-gray-900">Assigned on :</span> <span className="font-medium">{jobAssigned}</span></p>
-                    <p><span className="font-bold text-gray-900">Due :</span> <span className="font-medium">{jobDue}</span></p>
-                  </div>
+                )})
+              ) : (
+                <div className="col-span-1 lg:col-span-2 py-10 flex flex-col items-center justify-center text-gray-500">
+                  <Search className="w-10 h-10 mb-3 opacity-20" />
+                  <p className="text-sm font-medium">No assignments found matching "{searchQuery}"</p>
                 </div>
-              )})}
+              )}
             </div>
           </>
         ) : (

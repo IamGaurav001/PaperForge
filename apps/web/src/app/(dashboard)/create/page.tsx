@@ -145,8 +145,15 @@ export default function CreateAssignmentPage() {
         <div className="bg-[#e8e8e8] w-full max-w-3xl rounded-[32px] p-5 md:p-10 flex flex-col relative shadow-[inset_0_2px_10px_rgba(0,0,0,0.02)]">
           
           {/* Mobile Header & Progress (Hidden on Desktop) */}
-          <div className="flex md:hidden items-center justify-center relative mb-5">
-            <h2 className="text-[16px] font-bold text-gray-900 tracking-tight">Create Assignment</h2>
+          <div className="flex md:hidden items-center relative mb-5">
+            <button 
+              type="button"
+              onClick={() => router.back()} 
+              className="absolute left-0 w-10 h-10 bg-[#e0e0e0] hover:bg-[#d5d5d5] rounded-full flex items-center justify-center text-gray-700 transition-colors z-10"
+            >
+              <ArrowLeft className="w-5 h-5" />
+            </button>
+            <h2 className="text-[16px] font-bold text-gray-900 tracking-tight w-full text-center">Create Assignment</h2>
           </div>
           
           <div className="flex md:hidden gap-2 w-full mb-8">
