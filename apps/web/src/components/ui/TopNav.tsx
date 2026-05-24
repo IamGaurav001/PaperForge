@@ -4,6 +4,7 @@ import { Bell, ArrowLeft, Menu } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useSessionStore } from '@/store/useSessionStore';
+import { Logo } from './Logo';
 
 export interface TopNavProps {
   breadcrumb?: string;
@@ -45,14 +46,8 @@ export function TopNav({ breadcrumb = "Assignment", showBack = true }: TopNavPro
         </div>
 
         {/* Mobile Left side */}
-        <div className="flex md:hidden items-center gap-2.5">
-          <div className="w-[36px] h-[36px] rounded-[10px] bg-[#2B2B2B] flex items-center justify-center shrink-0 shadow-sm">
-            <svg viewBox="0 0 32 32" fill="none" className="w-[20px] h-[20px]">
-              <path d="M26 6L16 28H10L18 6H26Z" fill="#E2E8F0" />
-              <path d="M6 6L16 28H10L4 6H6Z" fill="white" />
-            </svg>
-          </div>
-          <span className="text-[20px] font-extrabold tracking-tight text-[#2B2B2B]">VedaAI</span>
+        <div className="flex md:hidden items-center">
+          <Logo iconSize={36} textSize="text-[20px]" />
         </div>
 
         {/* Right side (Desktop & Mobile) */}

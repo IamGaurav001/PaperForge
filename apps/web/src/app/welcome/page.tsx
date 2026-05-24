@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSessionStore } from "@/store/useSessionStore";
 import { ArrowRight, User } from "lucide-react";
+import { Logo } from "@/components/ui/Logo";
 
 export default function WelcomePage() {
   const router = useRouter();
@@ -41,14 +42,8 @@ export default function WelcomePage() {
         <div className="w-full md:w-1/2 p-10 md:p-16 flex flex-col justify-between bg-[#FAFAFA] relative">
           <div>
             {/* Logo */}
-            <div className="flex items-center gap-3 mb-16 md:mb-20">
-              <div className="w-10 h-10 rounded-[12px] bg-[#C23927] flex items-center justify-center relative shadow-sm">
-                <svg viewBox="0 0 32 32" fill="none" className="w-6 h-6">
-                  <path d="M26 6L16 28H10L18 6H26Z" fill="#E2E8F0" />
-                  <path d="M6 6L16 28H10L4 6H6Z" fill="white" />
-                </svg>
-              </div>
-              <span className="text-[20px] font-black tracking-tight text-[#0A0D14]">VedaAI</span>
+            <div className="mb-16 md:mb-20">
+              <Logo textSize="text-[20px]" />
             </div>
 
             {/* Typography */}

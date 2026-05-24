@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { LayoutGrid, Contact, FileText, Book, History, Settings } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { useJobStore } from '@/store/useJobStore';
+import { Logo } from './Logo';
 
 export function Sidebar() {
   const pathname = usePathname();
@@ -21,14 +22,8 @@ export function Sidebar() {
   return (
     <div className="hidden md:flex print:hidden w-[304px] h-full bg-white rounded-[32px] shadow-sm flex-col relative shrink-0">
       {/* Logo */}
-      <div className="pt-8 px-[26px] pb-8 flex items-center gap-3 shrink-0">
-        <div className="w-10 h-10 rounded-xl bg-[#C23927] flex items-center justify-center relative">
-          <svg viewBox="0 0 32 32" fill="none" className="w-6 h-6">
-            <path d="M26 6L16 28H10L18 6H26Z" fill="#E2E8F0" />
-            <path d="M6 6L16 28H10L4 6H6Z" fill="white" />
-          </svg>
-        </div>
-        <span className="text-[26px] font-extrabold tracking-tight text-[#2B2B2B]">VedaAI</span>
+      <div className="pt-8 px-[26px] pb-8 shrink-0">
+        <Logo />
       </div>
 
       {/* Action Button */}
