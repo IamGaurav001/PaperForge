@@ -9,7 +9,7 @@ This project is built using a **Turborepo** monorepo architecture with **pnpm wo
 ### Tech Stack
 *   **Frontend (`apps/web`)**: Next.js 15 App Router, TypeScript, Tailwind CSS, Zustand, React Hook Form + Zod, Framer Motion.
 *   **Backend (`apps/server`)**: Node.js, Express, TypeScript, Socket.io, BullMQ, Mongoose.
-*   **Infrastructure**: Redis (Queue), MongoDB (Data), OpenAI GPT-4o-mini (Generation).
+*   **Infrastructure**: Redis (Queue), MongoDB (Data), Google Gemini 2.5 Flash (Generation).
 *   **Shared Packages**:
     *   `@paperforge/types`: Shared TS interfaces and Zod schemas.
 
@@ -18,7 +18,7 @@ This project is built using a **Turborepo** monorepo architecture with **pnpm wo
 1.  **Job Creation**: The frontend sends an assessment generation request (`POST /generate`) to the backend.
 2.  **Queueing**: The backend saves the assignment to MongoDB and pushes a job to **BullMQ** (backed by Redis), instantly returning a `jobId` to the frontend.
 3.  **Realtime Tracking**: The frontend connects to **Socket.io** using the `jobId` and listens for `jobUpdate` events.
-4.  **Worker Processing**: The BullMQ worker picks up the job, constructs a rigid prompt, and calls OpenAI. It emits progress updates via Socket.io during this process.
+4.  **Worker Processing**: The BullMQ worker picks up the job, constructs a rigid prompt incorporating the teacher's specifications, and calls the Gemini API. It emits progress updates via Socket.io during this process.
 5.  **Completion**: Once the AI returns the structured JSON, the worker validates it, saves it to MongoDB, and emits a `COMPLETED` event.
 6.  **Rendering**: The frontend redirects the user to the generated paper, rendering it in a beautiful, print-friendly format.
 
@@ -54,7 +54,7 @@ PORT=3001
 MONGODB_URI=mongodb://admin:password@localhost:27017/paperforge?authSource=admin
 REDIS_HOST=localhost
 REDIS_PORT=6379
-OPENAI_API_KEY=your_openai_api_key
+GEMINI_API_KEY=your_gemini_api_key
 ```
 
 ### 3. Start Infrastructure
@@ -85,7 +85,14 @@ pnpm run dev
 2. Set the root directory to `apps/server` or specify the build command `pnpm --filter server build`.
 3. Start command: `pnpm --filter server start`.
 4. Provision a Redis instance (e.g., Upstash) and a MongoDB Atlas cluster.
-5. Provide `REDIS_HOST`, `REDIS_PORT`, `MONGODB_URI`, and `OPENAI_API_KEY` in the environment variables.
+5. Provide `REDIS_HOST`, `REDIS_PORT`, `MONGODB_URI`, and `GEMINI_API_KEY` in the environment variables.
 
-## ✨ UX/UI Details
-The frontend is meticulously designed using **Tailwind CSS** tokens, custom animations (`framer-motion`), and functional micro-interactions. The final paper rendering strips away unnecessary UI elements for a clean, institutional `print` layout.
+## ✨ Approach & Polish
+
+My approach prioritized a robust, production-ready backend to support a seamless, premium frontend experience. 
+
+### Bonus Features Implemented
+*   **PDF Export**: Native, fully-formatted PDF generation using `html2pdf.js`, preserving the clean exam layout instead of a messy raw browser print.
+*   **Better Caching**: Redis is utilized not just for queuing, but to store the job state, ensuring that refreshing the page or fetching recent jobs is lightning fast without stressing the primary database.
+*   **Improved UI Polish**: The UI closely follows the Figma designs but expands upon them with micro-animations, glassmorphism elements, color-coded difficulty badges (Easy, Medium, Hard), and responsive layouts.
+*   **Action Bar**: Added a "Regenerate" button to instantly request a new paper variation without re-entering form details.

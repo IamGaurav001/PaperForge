@@ -22,16 +22,16 @@ export function Sidebar() {
   return (
     <div className="hidden md:flex print:hidden w-[304px] h-full bg-white rounded-[32px] shadow-sm flex-col relative shrink-0">
       {/* Logo */}
-      <div className="pt-8 px-[26px] pb-8 shrink-0">
+      <div className="pt-8 px-[26px] shrink-0">
         <Logo />
       </div>
 
       {/* Action Button */}
-      <div className="px-[26px] mb-8 shrink-0 flex justify-center">
-        <Link href="/create" className="block w-[251px] group cursor-pointer">
-          <div className="w-full h-[42px] rounded-full bg-gradient-to-b from-[#F48F60] to-[#CD462F] p-[2.5px] shadow-[0_8px_16px_-6px_rgba(205,70,47,0.5)] transition-all duration-300 group-hover:shadow-[0_12px_20px_-6px_rgba(205,70,47,0.6)] group-hover:scale-[1.02] group-active:scale-[0.98]">
-            <button className="w-full h-full bg-[#2e2e2e] group-hover:bg-[#252525] text-white rounded-full flex items-center justify-center gap-2.5 text-[14px] font-medium transition-colors cursor-pointer pointer-events-none">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <div className="px-[26px] mt-10 shrink-0 flex justify-center">
+        <Link href="/create" className="block w-full group cursor-pointer">
+          <div className="w-full h-[48px] rounded-full bg-gradient-to-b from-[#F48F60] to-[#CD462F] p-[2px] shadow-[0_8px_16px_-6px_rgba(205,70,47,0.5)] transition-all duration-300 group-hover:shadow-[0_12px_20px_-6px_rgba(205,70,47,0.6)] group-hover:scale-[1.02] group-active:scale-[0.98]">
+            <button className="w-full h-full bg-[#2e2e2e] group-hover:bg-[#252525] text-white rounded-full flex items-center justify-center gap-2.5 text-[15px] font-semibold transition-colors cursor-pointer pointer-events-none">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path d="M10 2L11.8 7.8L17.6 9.6L11.8 11.4L10 17.2L8.2 11.4L2.4 9.6L8.2 7.8L10 2Z" />
                 <path d="M19 14L19.9 16.9L22.8 17.8L19.9 18.7L19 21.6L18.1 18.7L15.2 17.8L18.1 16.9L19 14Z" />
               </svg>
@@ -42,18 +42,18 @@ export function Sidebar() {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 px-[26px] space-y-[6px] overflow-y-auto">
+      <nav className="flex-1 px-[26px] mt-10 space-y-[12px] overflow-y-auto">
         {navItems.map((item) => {
           const isActive = item.href === '/' ? (pathname === '/' || pathname.startsWith('/create') || pathname.startsWith('/paper') || pathname.startsWith('/generate')) : pathname === item.href;
           return (
             <Link key={item.name} href={item.href} className="block">
-              <div className={`flex items-center gap-3.5 px-3.5 py-3 rounded-xl transition-colors ${isActive ? 'bg-[#F3F4F6]' : 'hover:bg-gray-50'}`}>
-                <item.icon className={`w-5 h-5 ${isActive ? 'text-gray-900' : 'text-gray-500'}`} strokeWidth={isActive ? 2.5 : 2} />
-                <span className={`text-[14px] ${isActive ? 'font-bold text-gray-900' : 'font-medium text-gray-500'} flex-1`}>
+              <div className={`flex items-center gap-3.5 px-3.5 py-[10px] rounded-[14px] transition-colors ${isActive ? 'bg-[#F3F4F6]' : 'hover:bg-gray-50'}`}>
+                <item.icon className={`w-[20px] h-[20px] ${isActive ? 'text-[#2B2B2B]' : 'text-gray-500'}`} strokeWidth={isActive ? 2.5 : 2} />
+                <span className={`text-[14px] ${isActive ? 'font-semibold text-[#2B2B2B]' : 'font-medium text-gray-500'} flex-1 tracking-tight`}>
                   {item.name}
                 </span>
                 {item.name === 'Assignments' && assignmentsCount > 0 && (
-                  <span className="bg-[#FF5733] text-white text-[10px] font-bold px-2 py-0.5 rounded-full leading-none">{assignmentsCount}</span>
+                  <span className="bg-[#FF5733] text-white text-[12px] font-bold px-2.5 py-[2px] rounded-full leading-none">{assignmentsCount}</span>
                 )}
               </div>
             </Link>
