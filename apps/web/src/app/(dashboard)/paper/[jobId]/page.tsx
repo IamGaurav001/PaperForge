@@ -67,23 +67,11 @@ export default function PaperOutputPage() {
   const handleDownloadPdf = async () => {
     setIsDownloading(true);
     try {
-      // @ts-ignore
-      const html2pdf = window.html2pdf;
-      if (!html2pdf) throw new Error("html2pdf library not loaded yet");
-      
-      const element = document.getElementById('paper-container');
-      const opt = {
-        margin: 15,
-        filename: `${paper.title || 'Assignment'}.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true, logging: false },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-      };
-      await html2pdf().set(opt).from(element).save();
+      // Small delay to ensure any dynamic rendering is done
+      await new Promise(resolve => setTimeout(resolve, 300));
+      window.print();
     } catch (error) {
       console.error('PDF Generation failed', error);
-      // Fallback to native print if html2pdf fails
-      window.print();
     } finally {
       setIsDownloading(false);
     }
@@ -125,8 +113,8 @@ export default function PaperOutputPage() {
       <Script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" strategy="lazyOnload" />
       <TopNav breadcrumb="Create New" showBack />
 
-      <div className="flex-1 h-0 flex flex-col overflow-hidden print:overflow-visible relative pb-2 md:pb-4 min-h-0">
-        <div className="bg-white md:bg-[#5e5e5e] print:bg-white max-w-full print:max-w-none rounded-[32px] print:rounded-none w-full flex-1 h-0 flex flex-col pt-4 md:pt-6 print:p-0 px-2 md:px-4 print:px-0 mt-2 md:mt-4 print:mt-0 pb-2 md:pb-4 min-h-0 overflow-hidden">
+      <div className="flex-1 h-0 print:h-auto flex print:block flex-col overflow-hidden print:overflow-visible relative pb-2 md:pb-4 min-h-0">
+        <div className="bg-white md:bg-[#5e5e5e] print:bg-white max-w-full print:max-w-none rounded-[32px] print:rounded-none w-full flex-1 h-0 print:h-auto flex print:block flex-col pt-4 md:pt-6 print:p-0 px-2 md:px-4 print:px-0 mt-2 md:mt-4 print:mt-0 pb-2 md:pb-4 min-h-0 overflow-hidden print:overflow-visible">
           {/* Dark Banner - Sticky */}
           <div className="shrink-0 z-10 print:hidden mb-4">
             <div className="bg-[#262626] text-white rounded-[32px] p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center justify-between shadow-2xl gap-6">
@@ -165,8 +153,8 @@ export default function PaperOutputPage() {
           </div>
 
           {/* Scrollable Paper Container */}
-          <div className="flex-1 h-0 overflow-y-auto rounded-[24px] md:rounded-[32px] print:overflow-visible w-full min-h-0">
-            <div id="paper-container" className="bg-white rounded-[32px] print:rounded-none p-10 md:p-16 print:px-16 print:py-12 shadow-sm print:shadow-none border border-gray-100 print:border-none font-sans text-gray-900 print:max-w-4xl print:mx-auto min-h-full">
+          <div className="flex-1 h-0 print:h-auto overflow-y-auto print:overflow-visible rounded-[24px] md:rounded-[32px] print:rounded-none w-full min-h-0">
+            <div id="paper-container" className="bg-white rounded-[32px] print:rounded-none p-10 md:p-16 shadow-sm print:shadow-none border border-gray-100 print:border-none font-sans text-gray-900 print:max-w-none print:mx-0 min-h-full print:min-h-0">
 
             <div className="text-center border-b border-gray-300 pb-8 mb-8">
               <h1 className="text-2xl font-bold mb-2">Delhi Public School, Sector-4, Bokaro</h1>
@@ -181,7 +169,7 @@ export default function PaperOutputPage() {
 
             <div className="mb-8 text-sm font-semibold">
               <p className="mb-6 font-bold text-center md:text-left">All questions are compulsory unless stated otherwise.</p>
-              <div className="space-y-4 text-sm font-bold max-w-sm">
+              <div className="space-y-4 text-sm font-bold max-w-2xl">
                 <div className="flex items-end gap-2">
                   <span>Name:</span>
                   <div className="flex-1 border-b border-gray-900"></div>
@@ -215,7 +203,7 @@ export default function PaperOutputPage() {
                         <span className="font-bold min-w-[20px]">{qIdx + 1}.</span>
                         <div className="flex-1">
                           <p className="leading-relaxed">
-                            <span className={`inline-flex items-center px-1.5 py-0.5 rounded-[6px] text-[10px] font-black border uppercase tracking-wider mr-2 align-middle ${getDifficultyBadge(q.difficulty)}`}>
+                            <span className={`inline-flex print:hidden items-center px-1.5 py-0.5 rounded-[6px] text-[10px] font-black border uppercase tracking-wider mr-2 align-middle ${getDifficultyBadge(q.difficulty)}`}>
                               {q.difficulty}
                             </span>
                             <span className="font-medium text-gray-800">{q.question}</span>
@@ -251,7 +239,7 @@ export default function PaperOutputPage() {
             </div>
 
             {/* Answer Key Section */}
-            <div className="mt-16 bg-[#FAFAFA] border border-gray-100 rounded-[24px] p-6 md:p-10 relative overflow-hidden group">
+            <div className="mt-16 print:break-before-page bg-[#FAFAFA] border border-gray-100 rounded-[24px] print:rounded-none p-6 md:p-10 print:p-0 relative overflow-hidden group">
               {/* Decorative background element */}
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-400 to-teal-500"></div>
               <div className="absolute top-0 right-0 -mt-4 -mr-4 w-32 h-32 bg-emerald-50 rounded-full blur-3xl opacity-50 group-hover:opacity-100 transition-opacity"></div>

@@ -80,14 +80,14 @@ export default function AssignmentsPage() {
             </div>
 
             {/* Desktop Filters Bar */}
-            <div className="hidden md:flex w-full bg-white rounded-[22px] py-4 px-6 items-center justify-between shadow-sm mb-4 relative z-10" ref={filterRef}>
+            <div className="hidden md:flex w-full bg-white rounded-[22px] py-4 px-6 items-center justify-between shadow-sm mb-4 relative z-10 md:rounded-[20px] " ref={filterRef}>
               <div 
                 className="flex items-center gap-2 text-gray-400 cursor-pointer pl-2 hover:text-gray-600 transition-colors relative"
                 onClick={() => setIsFilterOpen(!isFilterOpen)}
               >
                 <Filter className="w-5 h-5" />
                 <span className="text-[15px] font-semibold text-gray-500">
-                  Filter By {filterOption === "Oldest" ? "(Oldest)" : "(Newest)"}
+                  Filter By
                 </span>
                 
                 {isFilterOpen && (
@@ -171,7 +171,7 @@ export default function AssignmentsPage() {
                     className="bg-white rounded-[32px] md:rounded-[28px] p-6 md:p-8 border border-gray-100 shadow-sm relative group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer"
                     onClick={() => router.push(`/paper/${job.id}`)}
                   >
-                    <div className="flex justify-between items-start mb-5 md:mb-16">
+                    <div className="flex justify-between items-start mb-5 md:mb-12">
                       <h3 className="text-[18px] md:text-[22px] font-black tracking-tight text-gray-900 group-hover:underline">{job.title}</h3>
                       <div className="relative">
                         <button 
@@ -240,7 +240,7 @@ export default function AssignmentsPage() {
       </div>
 
       {/* Bottom Blur Effect */}
-      <div className="absolute bottom-0 left-0 right-0 h-[180px] md:h-[160px] pointer-events-none z-30 md:rounded-b-[32px] bg-[#ebebeb]/40 backdrop-blur-md [mask-image:linear-gradient(to_top,black_40%,transparent_100%)] -webkit-[mask-image:linear-gradient(to_top,black_40%,transparent_100%)]"></div>
+      <div className="absolute bottom-0 left-0 right-0 h-[180px] md:h-[160px] pointer-events-none z-30 bg-[#ebebeb]/40 backdrop-blur-md [mask-image:linear-gradient(to_top,black_40%,transparent_100%)] -webkit-[mask-image:linear-gradient(to_top,black_40%,transparent_100%)]"></div>
 
       {/* Floating FAB - Desktop View */}
       {hasAssignments && (
