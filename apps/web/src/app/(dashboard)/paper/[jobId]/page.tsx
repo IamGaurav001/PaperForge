@@ -115,7 +115,7 @@ export default function PaperOutputPage() {
       <TopNav breadcrumb="Create New" showBack />
 
       <div className="flex-1 h-0 print:h-auto flex print:block flex-col overflow-hidden print:overflow-visible relative pb-2 md:pb-4 min-h-0">
-        <div className="bg-white md:bg-[#5e5e5e] print:bg-white max-w-full print:max-w-none rounded-[32px] print:rounded-none w-full flex-1 h-0 print:h-auto flex print:block flex-col pt-4 md:pt-6 print:p-0 px-2 md:px-4 print:px-0 mt-2 md:mt-4 print:mt-0 pb-2 md:pb-4 min-h-0 overflow-hidden print:overflow-visible">
+        <div className="bg-white md:bg-[#5e5e5e] print:bg-white max-w-full print:max-w-none rounded-[20px] print:rounded-none w-full flex-1 h-0 print:h-auto flex print:block flex-col pt-4 md:pt-6 print:p-0 px-2 md:px-4 print:px-0 mt-2 md:mt-4 print:mt-0 pb-2 md:pb-4 min-h-0 overflow-hidden print:overflow-visible">
           {/* Dark Banner - Sticky */}
           <div className="shrink-0 z-10 print:hidden mb-4">
             <div className="bg-[#262626] text-white rounded-[32px] p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center justify-between shadow-2xl gap-6">
