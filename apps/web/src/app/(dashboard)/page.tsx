@@ -179,11 +179,11 @@ export default function AssignmentsPage() {
                   return (
                   <div 
                     key={job.id} 
-                    className="bg-white rounded-[24px] p-5 md:px-7 md:py-6 shadow-sm relative group hover:shadow-md transition-all duration-300 cursor-pointer"
+                    className="bg-white rounded-[24px] p-5 md:px-7 md:py-6 shadow-sm relative group hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 cursor-pointer border border-transparent hover:border-gray-100"
                     onClick={() => router.push(`/paper/${job.id}`)}
                   >
                     <div className="flex justify-between items-start mb-6 md:mb-8">
-                      <h3 className="text-[17px] md:text-[19px] font-bold tracking-tight text-[#1A1A1A] group-hover:underline pr-8">{job.title}</h3>
+                      <h3 className="text-[17px] md:text-[19px] font-bold tracking-tight text-[#1A1A1A] pr-8">{job.title}</h3>
                       <div className="absolute right-5 top-5 md:right-6 md:top-6">
                         <button 
                           onClick={(e) => {
