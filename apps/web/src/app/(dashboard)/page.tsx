@@ -83,7 +83,7 @@ export default function AssignmentsPage() {
             </div>
 
             {/* Desktop Filters Bar */}
-            <div className="hidden md:flex w-full bg-white rounded-[20px] py-4 px-6 items-center justify-between shadow-sm mb-4 relative z-10" ref={desktopFilterRef}>
+            <div className="hidden md:flex w-full bg-white rounded-[16px] py-3 px-5 items-center justify-between shadow-sm mb-6 relative z-10" ref={desktopFilterRef}>
               <div 
                 className="flex items-center gap-2 text-gray-400 cursor-pointer pl-2 hover:text-gray-600 transition-colors relative"
                 onClick={() => setIsFilterOpen(!isFilterOpen)}
@@ -111,20 +111,20 @@ export default function AssignmentsPage() {
                 )}
               </div>
               
-              <div className="relative w-[400px]">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <div className="relative w-[320px]">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-gray-400" />
                 <input 
                   type="text" 
                   placeholder="Search Assignment" 
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-11 pr-4 py-2.5 bg-white border border-gray-200 rounded-full text-[14px] font-semibold text-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-200"
+                  className="w-full pl-10 pr-4 py-2 bg-white border border-gray-200 rounded-full text-[14px] font-medium text-[#1A1A1A] placeholder:text-gray-400 focus:outline-none focus:border-gray-300 transition-colors"
                 />
               </div>
             </div>
 
             {/* Mobile Filters Bar */}
-            <div className="flex md:hidden w-full bg-white rounded-[20px] py-3.5 px-5 items-center justify-between shadow-sm mb-5 relative z-10" ref={mobileFilterRef}>
+            <div className="flex md:hidden w-full bg-white rounded-full py-3 px-4 items-center justify-between shadow-sm border border-gray-100 mb-5 relative z-10" ref={mobileFilterRef}>
               <div 
                 className="flex items-center gap-2 text-gray-400 cursor-pointer pl-1 hover:text-gray-600 transition-colors relative"
                 onClick={() => setIsFilterOpen(!isFilterOpen)}
@@ -159,7 +159,7 @@ export default function AssignmentsPage() {
                   placeholder="Search Name" 
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-transparent text-[14px] font-medium text-gray-700 placeholder:text-gray-400 focus:outline-none"
+                  className="w-full bg-transparent text-[14px] font-medium text-[#1A1A1A] placeholder:text-gray-400 focus:outline-none"
                 />
               </div>
             </div>
@@ -171,28 +171,28 @@ export default function AssignmentsPage() {
                   return (
                   <div 
                     key={job.id} 
-                    className="bg-white rounded-[32px] md:rounded-[28px] p-6 md:p-8 border border-gray-100 shadow-sm relative group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer"
+                    className="bg-white rounded-[24px] p-5 md:px-7 md:py-6 shadow-sm relative group hover:shadow-md transition-all duration-300 cursor-pointer"
                     onClick={() => router.push(`/paper/${job.id}`)}
                   >
-                    <div className="flex justify-between items-start mb-5 md:mb-12">
-                      <h3 className="text-[18px] md:text-[22px] font-black tracking-tight text-gray-900 group-hover:underline">{job.title}</h3>
-                      <div className="relative">
+                    <div className="flex justify-between items-start mb-6 md:mb-8">
+                      <h3 className="text-[17px] md:text-[19px] font-bold tracking-tight text-[#1A1A1A] group-hover:underline pr-8">{job.title}</h3>
+                      <div className="absolute right-5 top-5 md:right-6 md:top-6">
                         <button 
                           onClick={(e) => {
                             e.stopPropagation();
                             setOpenDropdownId(openDropdownId === job.id ? null : job.id);
                           }}
-                          className="text-gray-900 hover:bg-gray-100 p-1 rounded-full transition-all hover:scale-110 active:scale-95"
+                          className="text-gray-400 hover:text-gray-800 transition-colors rounded-full p-1 -mr-1 -mt-1"
                         >
-                          <MoreVertical className="w-5 h-5" />
+                          <MoreVertical className="w-[20px] h-[20px]" />
                         </button>
                         
                         {openDropdownId === job.id && (
                           <div 
                             ref={dropdownRef}
-                            className="absolute right-0 top-8 w-40 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-20 flex flex-col"
+                            className="absolute right-0 top-8 w-40 bg-white rounded-xl shadow-xl border border-gray-100 py-1.5 z-20 flex flex-col"
                           >
-                            <button onClick={(e) => { e.stopPropagation(); router.push(`/paper/${job.id}`); }} className="text-left px-4 py-2 text-[13px] font-semibold hover:bg-gray-50 text-gray-900 transition-colors">
+                            <button onClick={(e) => { e.stopPropagation(); router.push(`/paper/${job.id}`); }} className="text-left px-4 py-2 text-[13px] font-semibold hover:bg-gray-50 text-[#1A1A1A] transition-colors">
                               View Assignment
                             </button>
                             <button onClick={(e) => { e.stopPropagation(); removeJob(job.id); setOpenDropdownId(null); }} className="text-left px-4 py-2 text-[13px] font-semibold hover:bg-red-50 text-red-600 transition-colors">
@@ -202,9 +202,9 @@ export default function AssignmentsPage() {
                         )}
                       </div>
                     </div>
-                    <div className="flex items-center gap-3 text-[12px] md:text-[13px] text-gray-500">
-                      <p><span className="font-bold text-gray-900">Assigned on :</span> <span className="font-medium">{job.assignedOn}</span></p>
-                      <p><span className="font-bold text-gray-900">Due :</span> <span className="font-medium">{job.dueDate}</span></p>
+                    <div className="flex items-center gap-4 text-[12px] md:text-[13px]">
+                      <p><span className="font-bold text-[#202020]">Assigned on :</span> <span className="font-medium text-gray-500">{job.assignedOn}</span></p>
+                      <p><span className="font-bold text-[#202020]">Due :</span> <span className="font-medium text-gray-500">{job.dueDate}</span></p>
                     </div>
                   </div>
                 )})
@@ -280,8 +280,8 @@ export default function AssignmentsPage() {
         )}
       </div>
 
-      {/* Bottom Blur Effect */}
-      <div className="absolute bottom-0 left-0 right-0 h-[180px] md:h-[160px] pointer-events-none z-30 bg-[#ebebeb]/40 backdrop-blur-md [mask-image:linear-gradient(to_top,black_40%,transparent_100%)] -webkit-[mask-image:linear-gradient(to_top,black_40%,transparent_100%)]"></div>
+      {/* Bottom Fade Effect */}
+      <div className="absolute bottom-0 left-0 right-0 h-[160px] md:h-[120px] pointer-events-none z-30 bg-gradient-to-t from-[#ebebeb] via-[#ebebeb]/80 to-transparent"></div>
 
       {/* Floating FAB - Desktop View */}
       {hasAssignments && (
@@ -297,10 +297,10 @@ export default function AssignmentsPage() {
 
       {/* Floating FAB - Mobile View */}
       {hasAssignments && (
-        <div className="md:hidden absolute bottom-[115px] right-6 z-40">
+        <div className="md:hidden absolute bottom-[104px] right-6 z-[60]">
           <Link href="/create">
-            <button className="w-[52px] h-[52px] bg-white text-[#FF4500] rounded-full flex items-center justify-center shadow-[0_4px_14px_rgba(0,0,0,0.15)] transition-all duration-300 hover:scale-[1.05] hover:shadow-[0_6px_20px_rgba(0,0,0,0.2)] active:scale-[0.95] cursor-pointer">
-              <Plus className="w-6 h-6" strokeWidth={3} />
+            <button className="w-[50px] h-[50px] bg-white text-[#FF4500] rounded-full flex items-center justify-center shadow-[0_4px_16px_rgba(0,0,0,0.15)] transition-all duration-300 hover:scale-[1.05] active:scale-[0.95] cursor-pointer">
+              <Plus className="w-6 h-6" strokeWidth={2.5} />
             </button>
           </Link>
         </div>
@@ -308,7 +308,7 @@ export default function AssignmentsPage() {
 
       {/* Bottom Nav - Mobile View */}
       <div className="md:hidden w-full px-4 pb-6 absolute bottom-0 left-0 z-50">
-        <nav className="bg-[#1A1A1A] rounded-[28px] px-6 py-5 flex items-center justify-between shadow-[0_10px_40px_rgba(0,0,0,0.2)]">
+        <nav className="bg-[#1A1A1A] rounded-[24px] px-6 py-4 flex items-center justify-between shadow-2xl">
           <Link href="/home" className="flex flex-col items-center gap-1 opacity-50 hover:opacity-100 transition-opacity">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white"><rect x="3" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="14" width="7" height="7" rx="1"></rect><rect x="3" y="14" width="7" height="7" rx="1"></rect></svg>
             <span className="text-[10px] font-medium text-white">Home</span>
