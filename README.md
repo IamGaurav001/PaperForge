@@ -92,7 +92,7 @@ pnpm run dev
 My approach prioritized a robust, production-ready backend to support a seamless, premium frontend experience. 
 
 ### Bonus Features Implemented
-*   **PDF Export**: Native, fully-formatted PDF generation using `html2pdf.js`, preserving the clean exam layout instead of a messy raw browser print.
+*   **PDF Export**: High-quality, vector-based PDF generation utilizing the native browser print engine with customized CSS `@media print` rules, guaranteeing selectable text and perfect exam layouts (far superior to buggy `html2canvas` image blobs).
 *   **Better Caching**: Redis is utilized not just for queuing, but to store the job state, ensuring that refreshing the page or fetching recent jobs is lightning fast without stressing the primary database.
 *   **Improved UI Polish**: The UI closely follows the Figma designs but expands upon them with micro-animations, glassmorphism elements, color-coded difficulty badges (Easy, Medium, Hard), and responsive layouts.
 *   **Action Bar**: Added a "Regenerate" button to instantly request a new paper variation without re-entering form details.

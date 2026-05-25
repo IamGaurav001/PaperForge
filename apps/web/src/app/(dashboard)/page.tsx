@@ -16,7 +16,8 @@ export default function AssignmentsPage() {
   const [filterOption, setFilterOption] = useState<"Newest" | "Oldest">("Newest");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const filterRef = useRef<HTMLDivElement>(null);
+  const desktopFilterRef = useRef<HTMLDivElement>(null);
+  const mobileFilterRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -29,7 +30,9 @@ export default function AssignmentsPage() {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setOpenDropdownId(null);
       }
-      if (filterRef.current && !filterRef.current.contains(event.target as Node)) {
+      const isOutsideDesktop = desktopFilterRef.current ? !desktopFilterRef.current.contains(event.target as Node) : true;
+      const isOutsideMobile = mobileFilterRef.current ? !mobileFilterRef.current.contains(event.target as Node) : true;
+      if (isOutsideDesktop && isOutsideMobile) {
         setIsFilterOpen(false);
       }
     };
@@ -80,12 +83,12 @@ export default function AssignmentsPage() {
             </div>
 
             {/* Desktop Filters Bar */}
-            <div className="hidden md:flex w-full bg-white rounded-[22px] py-4 px-6 items-center justify-between shadow-sm mb-4 relative z-10 md:rounded-[20px] " ref={filterRef}>
+            <div className="hidden md:flex w-full bg-white rounded-[20px] py-4 px-6 items-center justify-between shadow-sm mb-4 relative z-10" ref={desktopFilterRef}>
               <div 
                 className="flex items-center gap-2 text-gray-400 cursor-pointer pl-2 hover:text-gray-600 transition-colors relative"
                 onClick={() => setIsFilterOpen(!isFilterOpen)}
               >
-                <Filter className="w-5 h-5" />
+                <Filter className="w-4 h-5" />
                 <span className="text-[15px] font-semibold text-gray-500">
                   Filter By
                 </span>
@@ -121,7 +124,7 @@ export default function AssignmentsPage() {
             </div>
 
             {/* Mobile Filters Bar */}
-            <div className="flex md:hidden w-full bg-white rounded-full py-3.5 px-5 items-center justify-between shadow-sm mb-5 relative z-10" ref={filterRef}>
+            <div className="flex md:hidden w-full bg-white rounded-[20px] py-3.5 px-5 items-center justify-between shadow-sm mb-5 relative z-10" ref={mobileFilterRef}>
               <div 
                 className="flex items-center gap-2 text-gray-400 cursor-pointer pl-1 hover:text-gray-600 transition-colors relative"
                 onClick={() => setIsFilterOpen(!isFilterOpen)}
@@ -215,23 +218,61 @@ export default function AssignmentsPage() {
           </>
         ) : (
           <div className="flex-1 flex flex-col items-center justify-center -mt-20">
-            <div className="relative w-64 h-64 mb-6 flex items-center justify-center">
-              {/* Using a structural placeholder for the Empty state SVG */}
-              <div className="w-32 h-40 bg-white border-4 border-gray-200 rounded-lg shadow-sm relative z-10 flex flex-col items-center justify-center">
-                <div className="w-16 h-4 bg-gray-200 rounded mb-2"></div>
-                <div className="w-12 h-4 bg-gray-200 rounded"></div>
+            <div className="relative w-[340px] h-[300px] mb-2 flex items-center justify-center">
+              {/* Base Circle */}
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] h-[250px] bg-[#F1F3F5] rounded-full"></div>
+              
+              {/* Decorative elements */}
+              {/* Squiggle Top Left */}
+              <svg className="absolute left-[38px] top-[70px] w-16 h-16 text-[#0F1C2D] z-0" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M10 60 C40 50, 45 30, 35 25 C25 20, 15 30, 25 45 C40 65, 70 40, 80 20" />
+              </svg>
+
+              {/* Sparkle Bottom Left */}
+              <svg className="absolute bottom-[75px] left-[70px] w-[20px] h-[20px] text-[#386692] z-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 2 Q12 12 2 12 Q12 12 12 22 Q12 12 22 12 Q12 12 12 2Z" />
+              </svg>
+
+              {/* Dot Right */}
+              <div className="absolute bottom-[115px] right-[65px] w-[11px] h-[11px] bg-[#386692] rounded-full z-0"></div>
+              
+              {/* Floating window Top Right */}
+              <div className="absolute top-[65px] right-[75px] w-[64px] h-[38px] bg-white rounded-[12px] shadow-[0_2px_12px_rgba(0,0,0,0.06)] flex items-center justify-center gap-[7px] z-10 px-3">
+                <div className="w-[8px] h-[8px] rounded-full bg-[#B7ACCF] shrink-0"></div>
+                <div className="w-[20px] h-[10px] rounded-full bg-[#B4BBC6] shrink-0"></div>
               </div>
-              <div className="absolute z-20 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-24 h-24 bg-purple-100/50 rounded-full border-8 border-white shadow-lg flex items-center justify-center">
-                <div className="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center text-white font-bold text-xl">X</div>
+
+              {/* Document */}
+              <div className="relative z-10 w-[118px] h-[148px] bg-white rounded-[20px] shadow-[0_4px_20px_rgba(0,0,0,0.05)] flex flex-col p-[18px] ml-[-16px] mt-[-10px]">
+                <div className="w-[34px] h-[8px] bg-[#0F1C2D] rounded-full mb-[22px]"></div>
+                <div className="w-[58px] h-[8px] bg-[#E1E4E8] rounded-full mb-[14px]"></div>
+                <div className="w-[58px] h-[8px] bg-[#E1E4E8] rounded-full mb-[14px]"></div>
+                <div className="w-[58px] h-[8px] bg-[#E1E4E8] rounded-full mb-[14px]"></div>
+                <div className="w-[42px] h-[8px] bg-[#E1E4E8] rounded-full"></div>
+              </div>
+
+              {/* Magnifying Glass with Red X */}
+              <div className="absolute z-20 bottom-[35px] right-[70px] w-32 h-32 flex items-center justify-center">
+                {/* The glass ring */}
+                <div className="relative w-[110px] h-[110px] bg-white/40 backdrop-blur-md rounded-full border-[12px] border-[#DCD5E4] shadow-[0_12px_24px_rgba(0,0,0,0.06)] flex items-center justify-center">
+                  {/* Red X */}
+                  <div className="relative w-10 h-10 flex items-center justify-center z-10">
+                    <div className="absolute w-[36px] h-[8px] bg-[#FA4A4D] rounded-full rotate-45"></div>
+                    <div className="absolute w-[36px] h-[8px] bg-[#FA4A4D] rounded-full -rotate-45"></div>
+                  </div>
+                  {/* Handle */}
+                  <div className="absolute -bottom-[32px] -right-[24px] w-[50px] h-[16px] bg-[#DCD5E4] rounded-full rotate-[42deg]"></div>
+                </div>
               </div>
             </div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-3">No assignments yet</h2>
-            <p className="text-gray-500 text-center max-w-md mb-8 text-sm leading-relaxed">
+            
+            <h2 className="text-[20px] font-bold text-[#202020] mb-3">No assignments yet</h2>
+            <p className="text-[#767676] text-center max-w-[440px] mb-8 text-[14px] leading-[1.6]">
               Create your first assignment to start collecting and grading student submissions. You can set up rubrics, define marking criteria, and let AI assist with grading.
             </p>
             <Link href="/create">
-              <button className="bg-[#1A1A1A] hover:bg-black text-white px-6 py-3 rounded-full flex items-center gap-2 font-medium shadow-md transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
-                <Plus className="w-5 h-5" />
+              <button className="bg-[#191919] hover:bg-black text-white px-7 py-3 rounded-full flex items-center gap-2 text-[15px] font-medium transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] cursor-pointer shadow-sm">
+                <Plus className="w-[18px] h-[18px]" strokeWidth={2} />
                 Create Your First Assignment
               </button>
             </Link>
