@@ -58,9 +58,17 @@ export default function AssignmentsPage() {
 
   return (
     <>
-      <TopNav showBack={false} />
+      <div className="absolute top-0 left-0 right-0 z-40 bg-[linear-gradient(to_bottom,#ebebeb_0%,#ebebeb_75%,transparent_100%)] pb-4 md:pb-6 pt-1 md:pt-2 pointer-events-none">
+        <div className="pointer-events-auto px-1 md:px-0">
+          <TopNav showBack={false} />
+        </div>
+      </div>
+
+      <div className="flex-1 flex flex-col overflow-y-auto px-1 md:px-0 h-full relative w-full">
+        {/* Spacer for absolute TopNav */}
+        <div className="w-full h-[76px] md:h-[88px] shrink-0"></div>
       
-      <div className="flex-1 flex flex-col overflow-y-auto px-1 md:px-0 py-2 md:py-8 h-full relative">
+      <div className="flex-1 flex flex-col h-full relative">
         {hasAssignments ? (
           <>
             {/* Desktop Header */}
@@ -182,7 +190,7 @@ export default function AssignmentsPage() {
                             e.stopPropagation();
                             setOpenDropdownId(openDropdownId === job.id ? null : job.id);
                           }}
-                          className="text-gray-400 hover:text-gray-800 transition-colors rounded-full p-1 -mr-1 -mt-1"
+                          className="text-gray-400 hover:text-gray-800 hover:bg-gray-100 transition-colors rounded-full p-1.5 -mr-1.5 -mt-1.5 cursor-pointer flex items-center justify-center"
                         >
                           <MoreVertical className="w-[20px] h-[20px]" />
                         </button>
@@ -279,9 +287,10 @@ export default function AssignmentsPage() {
           </div>
         )}
       </div>
+      </div>
 
       {/* Bottom Fade Effect */}
-      <div className="fixed bottom-0 left-0 right-0 w-full h-[160px] md:h-[120px] pointer-events-none z-30 bg-gradient-to-t from-[#ebebeb] via-[#ebebeb]/80 to-transparent"></div>
+      <div className="fixed md:absolute bottom-0 left-0 right-0 w-full md:w-auto h-[160px] md:h-[120px] pointer-events-none z-30 bg-gradient-to-t from-[#ebebeb] via-[#ebebeb]/80 to-transparent"></div>
 
       {/* Floating FAB - Desktop View */}
       {hasAssignments && (
