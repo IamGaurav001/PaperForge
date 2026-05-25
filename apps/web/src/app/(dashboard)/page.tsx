@@ -281,7 +281,7 @@ export default function AssignmentsPage() {
       </div>
 
       {/* Bottom Fade Effect */}
-      <div className="absolute bottom-0 left-0 right-0 h-[160px] md:h-[120px] pointer-events-none z-30 bg-gradient-to-t from-[#ebebeb] via-[#ebebeb]/80 to-transparent"></div>
+      <div className="fixed bottom-0 left-0 right-0 w-full h-[160px] md:h-[120px] pointer-events-none z-30 bg-gradient-to-t from-[#ebebeb] via-[#ebebeb]/80 to-transparent"></div>
 
       {/* Floating FAB - Desktop View */}
       {hasAssignments && (
@@ -307,14 +307,14 @@ export default function AssignmentsPage() {
       )}
 
       {/* Bottom Nav - Mobile View */}
-      <div className="md:hidden w-full px-4 pb-6 absolute bottom-0 left-0 z-50">
+      <div className="md:hidden w-full px-4 pb-6 fixed bottom-0 left-0 z-50">
         <nav className="bg-[#1A1A1A] rounded-[24px] px-6 py-4 flex items-center justify-between shadow-2xl">
           <Link href="/home" className="flex flex-col items-center gap-1 opacity-50 hover:opacity-100 transition-opacity">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white"><rect x="3" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="14" width="7" height="7" rx="1"></rect><rect x="3" y="14" width="7" height="7" rx="1"></rect></svg>
             <span className="text-[10px] font-medium text-white">Home</span>
           </Link>
           <Link href="/" className="flex flex-col items-center gap-1 text-white">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="white" stroke="white" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6" stroke="black" strokeWidth="2"></line><line x1="8" y1="2" x2="8" y2="6" stroke="black" strokeWidth="2"></line><line x1="3" y1="10" x2="21" y2="10" stroke="black" strokeWidth="2"></line></svg>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
             <span className="text-[10px] font-bold">Assignments</span>
           </Link>
           <Link href="/library" className="flex flex-col items-center gap-1 opacity-50 hover:opacity-100 transition-opacity">

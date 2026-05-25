@@ -126,7 +126,7 @@ export default function CreateAssignmentPage() {
     <>
       <TopNav breadcrumb="Assignment" showBack={true} />
       
-      <div className="flex-1 w-full overflow-y-auto pb-32 pt-2 md:pt-6 px-4 md:px-0 flex flex-col items-center">
+      <div className="flex-1 w-full overflow-y-auto pb-12 md:pb-32 pt-2 md:pt-6 px-4 md:px-0 flex flex-col items-center">
         
         {/* Desktop Header (Hidden on Mobile) */}
         <div className="hidden md:flex w-full max-w-3xl mb-8 shrink-0 px-2 items-start gap-3">
@@ -146,7 +146,7 @@ export default function CreateAssignmentPage() {
         </div>
 
         {/* Main Form Container */}
-        <div className="bg-[#e8e8e8] w-full max-w-3xl rounded-[32px] p-5 md:p-10 flex flex-col relative shadow-[inset_0_2px_10px_rgba(0,0,0,0.02)]">
+        <div className="bg-[#e8e8e8] w-full max-w-3xl rounded-[32px] p-5 pb-6 md:p-10 flex flex-col relative shadow-[inset_0_2px_10px_rgba(0,0,0,0.02)]">
           
           {/* Mobile Header & Progress (Hidden on Desktop) */}
           <div className="flex md:hidden items-center relative mb-5">
@@ -271,7 +271,7 @@ export default function CreateAssignmentPage() {
             </div>
 
             {/* Question Types */}
-            <div className="mb-8">
+            <div className="mb-4 md:mb-8">
               <div className="flex items-center justify-between mb-4 md:mb-6">
                 <label className="text-[14px] font-bold text-gray-900">Question Type</label>
                 <div className="hidden md:flex gap-16 pr-6">
@@ -338,7 +338,7 @@ export default function CreateAssignmentPage() {
               </button>
             </div>
 
-            <div className="flex flex-col items-end mb-8 md:mb-10 pt-2 md:pt-4 pr-2">
+            <div className="flex flex-col items-end mb-2 md:mb-10 pt-2 md:pt-4 pr-2">
               <p className="text-[13px] font-bold text-gray-900">Total Questions : {totalQuestions}</p>
               <p className="text-[13px] font-bold text-gray-900 mt-1">Total Marks : {totalMarks}</p>
             </div>
