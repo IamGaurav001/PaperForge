@@ -310,7 +310,7 @@ export default function CreateAssignmentPage() {
             </div>
 
             {/* Additional Information (Desktop specific) */}
-            <div className="hidden md:block mb-4">
+            <div className="hidden md:block mb-0">
               <label className="block text-[14px] font-bold text-gray-900 mb-4">Additional Information (For better output)</label>
               <div className="relative">
                 <textarea 
@@ -327,7 +327,7 @@ export default function CreateAssignmentPage() {
         </div>
 
         {/* Bottom Actions Outside Form Container */}
-        <div className="mt-8 flex justify-center items-center gap-4 w-full px-4 relative z-20">
+        <div className="mt-4 flex justify-between items-center w-full max-w-3xl px-4 md:px-0 relative z-20">
           <button 
             type="button" 
             onClick={() => router.back()}

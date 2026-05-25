@@ -125,43 +125,48 @@ export default function PaperOutputPage() {
       <Script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" strategy="lazyOnload" />
       <TopNav breadcrumb="Create New" showBack />
 
-      <div className="flex-1 flex flex-col overflow-y-auto print:overflow-visible">
-        <div className="bg-white md:bg-[#5e5e5e] print:bg-white max-w-full print:max-w-none rounded-[32px] print:rounded-none w-full py-2 md:py-6 print:py-0 px-2 md:px-4 print:px-0 mt-6 print:mt-0">
-          {/* Dark Banner */}
-          <div className="bg-[#262626] text-white rounded-[32px] p-8 mb-2 flex flex-col md:flex-row items-start md:items-center justify-between shadow-sm print:hidden gap-6">
+      <div className="flex-1 h-0 flex flex-col overflow-hidden print:overflow-visible relative pb-2 md:pb-4 min-h-0">
+        <div className="bg-white md:bg-[#5e5e5e] print:bg-white max-w-full print:max-w-none rounded-[32px] print:rounded-none w-full flex-1 h-0 flex flex-col pt-4 md:pt-6 print:p-0 px-2 md:px-4 print:px-0 mt-2 md:mt-4 print:mt-0 pb-2 md:pb-4 min-h-0 overflow-hidden">
+          {/* Dark Banner - Sticky */}
+          <div className="shrink-0 z-10 print:hidden mb-4">
+            <div className="bg-[#262626] text-white rounded-[32px] p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center justify-between shadow-2xl gap-6">
             <p className="text-[15px] font-medium leading-relaxed max-w-2xl">
-              Certainly, Lakshya! Here are customized Question Paper for your CBSE Grade 8 Science classes on the NCERT chapters:
+              Here is your customized Question Paper for <strong>{paper?.title || localJob?.title || "your class"}</strong>. You can review the questions below, regenerate if needed, or download as PDF.
             </p>
-            <div className="flex items-center gap-3 shrink-0 flex-wrap">
+            <div className="flex items-center gap-3 shrink-0 flex-nowrap">
               <button
                 onClick={handleRegenerate}
                 disabled={isRegenerating}
-                className="bg-[#1a1a1a] border border-[#444] text-white px-5 py-2.5 rounded-full text-[13px] font-bold flex items-center gap-2 hover:bg-black hover:border-gray-500 transition-all duration-300 disabled:opacity-50 cursor-pointer"
+                title="Regenerate"
+                className="bg-[#1a1a1a] border border-[#444] text-white rounded-full text-[13px] font-bold flex items-center justify-center gap-2 hover:bg-black hover:border-gray-500 transition-all duration-300 disabled:opacity-50 cursor-pointer shrink-0 w-10 h-10 p-0 md:w-auto md:h-auto md:px-5 md:py-2.5"
               >
                 {isRegenerating ? (
-                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin shrink-0" />
                 ) : (
-                  <RefreshCw className="w-4 h-4" />
+                  <RefreshCw className="w-4 h-4 shrink-0" />
                 )}
-                Regenerate
+                <span className="hidden md:inline">Regenerate</span>
               </button>
               <button
                 onClick={handleDownloadPdf}
                 disabled={isDownloading}
-                className="bg-white text-gray-900 px-5 py-2.5 rounded-full text-[13px] font-bold flex items-center gap-2 hover:bg-gray-100 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-70 disabled:hover:scale-100 cursor-pointer"
+                title="Download PDF"
+                className="bg-white text-gray-900 rounded-full text-[13px] font-bold flex items-center justify-center gap-2 hover:bg-gray-100 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-70 disabled:hover:scale-100 cursor-pointer shrink-0 w-10 h-10 p-0 md:w-auto md:h-auto md:px-5 md:py-2.5"
               >
                 {isDownloading ? (
-                  <div className="w-4 h-4 border-2 border-gray-900/30 border-t-gray-900 rounded-full animate-spin" />
+                  <div className="w-4 h-4 border-2 border-gray-900/30 border-t-gray-900 rounded-full animate-spin shrink-0" />
                 ) : (
-                  <DownloadCloud className="w-4 h-4" />
+                  <DownloadCloud className="w-4 h-4 shrink-0" />
                 )}
-                {isDownloading ? "Generating..." : "Download PDF"}
+                <span className="hidden md:inline">{isDownloading ? "Generating..." : "Download PDF"}</span>
               </button>
             </div>
           </div>
+          </div>
 
-          {/* Paper Container */}
-          <div id="paper-container" className="bg-white rounded-[32px] print:rounded-none p-10 md:p-16 print:px-16 print:py-12 shadow-sm print:shadow-none border border-gray-100 print:border-none font-sans text-gray-900 print:max-w-4xl print:mx-auto">
+          {/* Scrollable Paper Container */}
+          <div className="flex-1 h-0 overflow-y-auto rounded-[24px] md:rounded-[32px] print:overflow-visible w-full min-h-0">
+            <div id="paper-container" className="bg-white rounded-[32px] print:rounded-none p-10 md:p-16 print:px-16 print:py-12 shadow-sm print:shadow-none border border-gray-100 print:border-none font-sans text-gray-900 print:max-w-4xl print:mx-auto min-h-full">
 
             <div className="text-center border-b border-gray-300 pb-8 mb-8">
               <h1 className="text-2xl font-bold mb-2">Delhi Public School, Sector-4, Bokaro</h1>
@@ -276,6 +281,7 @@ export default function PaperOutputPage() {
                   </div>
                 ))}
               </div>
+            </div>
             </div>
           </div>
         </div>

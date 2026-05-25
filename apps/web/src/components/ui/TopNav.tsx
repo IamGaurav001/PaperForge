@@ -4,6 +4,7 @@ import { Bell, ArrowLeft, Menu, User } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useSessionStore } from '@/store/useSessionStore';
+import { useUIStore } from '@/store/useUIStore';
 import { Logo } from './Logo';
 
 export interface TopNavProps {
@@ -13,6 +14,7 @@ export interface TopNavProps {
 
 export function TopNav({ breadcrumb = "Assignment", showBack = true }: TopNavProps) {
   const router = useRouter();
+  const toggleSidebar = useUIStore((state) => state.toggleSidebar);
 
   return (
     <div className="w-full h-auto flex flex-col justify-center shrink-0 mb-0 md:mb-0 print:hidden">
@@ -67,7 +69,7 @@ export function TopNav({ breadcrumb = "Assignment", showBack = true }: TopNavPro
             <svg className="w-5 h-5 text-gray-800 shrink-0 hidden md:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
             </svg>
-            <Menu className="w-7 h-7 text-[#2B2B2B] block md:hidden ml-1" strokeWidth={2.5} />
+            <Menu onClick={toggleSidebar} className="w-7 h-7 text-[#2B2B2B] block md:hidden ml-1 cursor-pointer" strokeWidth={2.5} />
           </div>
         </div>
       </div>
