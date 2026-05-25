@@ -21,14 +21,12 @@ const worker = new Worker('assessmentQueue', async (bullJob: BullJob) => {
   let interval: NodeJS.Timeout | undefined;
 
   try {
-    // Update status to GENERATING
     await Job.findOneAndUpdate({ jobId }, { status: 'GENERATING' });
     io.emit('jobUpdate', { jobId, status: 'GENERATING', progress: 10 });
 
     const assignment = await Assignment.findById(assignmentId);
     if (!assignment) throw new Error('Assignment not found');
 
-    // Artificial progress updates
     let progress = 10;
     interval = setInterval(() => {
       progress += Math.floor(Math.random() * 15);
