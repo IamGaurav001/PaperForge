@@ -75,11 +75,11 @@ export default function AssignmentsPage() {
             </div>
 
             {/* Mobile Header */}
-            <div className="flex md:hidden items-center justify-center relative mt-1 mb-5">
-              <button onClick={() => router.back()} className="absolute left-0 w-10 h-10 flex items-center justify-center bg-[#E5E5E5] rounded-full hover:bg-gray-200 hover:scale-[1.05] active:scale-[0.95] transition-all">
+            <div className="flex md:hidden items-center justify-center relative mt-6 mb-7 px-2">
+              <button onClick={() => router.back()} className="absolute left-2 w-10 h-10 flex items-center justify-center bg-[#E5E5E5] rounded-full hover:bg-gray-200 hover:scale-[1.05] active:scale-[0.95] transition-all">
                 <ArrowLeft className="w-5 h-5 text-gray-800" />
               </button>
-              <h2 className="text-[16px] font-bold text-gray-900 tracking-tight">Assignments</h2>
+              <h2 className="text-[18px] font-bold text-gray-900 tracking-tight">Assignments</h2>
             </div>
 
             {/* Desktop Filters Bar */}
@@ -124,18 +124,18 @@ export default function AssignmentsPage() {
             </div>
 
             {/* Mobile Filters Bar */}
-            <div className="flex md:hidden w-full bg-white rounded-full py-3 px-4 items-center justify-between shadow-sm border border-gray-100 mb-5 relative z-10" ref={mobileFilterRef}>
+            <div className="flex md:hidden w-full bg-white rounded-[24px] p-2 items-center shadow-[0_2px_10px_rgba(0,0,0,0.04)] mb-5 relative z-10" ref={mobileFilterRef}>
               <div 
-                className="flex items-center gap-2 text-gray-400 cursor-pointer pl-1 hover:text-gray-600 transition-colors relative"
+                className="flex items-center gap-2 text-[#A1A1AA] cursor-pointer px-3 hover:text-gray-600 transition-colors relative whitespace-nowrap shrink-0"
                 onClick={() => setIsFilterOpen(!isFilterOpen)}
               >
-                <Filter className="w-4 h-4" />
-                <span className="text-[14px] font-medium text-gray-400">
+                <Filter className="w-[18px] h-[18px]" strokeWidth={2} />
+                <span className="text-[15px] font-medium">
                   Filter {filterOption === "Oldest" ? "(Oldest)" : ""}
                 </span>
                 
                 {isFilterOpen && (
-                  <div className="absolute top-8 left-0 w-40 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-20 flex flex-col">
+                  <div className="absolute top-10 left-0 w-40 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-20 flex flex-col">
                     <button 
                       onClick={() => setFilterOption("Newest")} 
                       className={`text-left px-4 py-2 text-[13px] font-semibold transition-colors ${filterOption === "Newest" ? "bg-gray-100 text-gray-900" : "hover:bg-gray-50 text-gray-600"}`}
@@ -151,15 +151,15 @@ export default function AssignmentsPage() {
                   </div>
                 )}
               </div>
-              <div className="w-[1.5px] h-4 bg-gray-200 mx-3"></div>
-              <div className="flex items-center gap-2 flex-1">
-                <Search className="w-4 h-4 text-gray-400" />
+              
+              <div className="flex items-center gap-2.5 flex-1 border border-[#E4E4E7] rounded-full px-4 py-2.5 ml-1 bg-white">
+                <Search className="w-[18px] h-[18px] text-[#A1A1AA]" strokeWidth={2} />
                 <input 
                   type="text" 
                   placeholder="Search Name" 
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-transparent text-[14px] font-medium text-[#1A1A1A] placeholder:text-gray-400 focus:outline-none"
+                  className="w-full bg-transparent text-[15px] font-medium text-[#1A1A1A] placeholder:text-[#A1A1AA] focus:outline-none"
                 />
               </div>
             </div>

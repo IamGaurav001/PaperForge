@@ -28,6 +28,7 @@ const worker = new Worker('assessmentQueue', async (bullJob: BullJob) => {
     if (!assignment) throw new Error('Assignment not found');
 
     let progress = 10;
+    
     interval = setInterval(() => {
       progress += Math.floor(Math.random() * 15);
       if (progress > 90) progress = 90;
