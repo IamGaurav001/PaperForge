@@ -41,6 +41,7 @@ export interface AssignmentDocument {
   id: string;
   title: string;
   subject: string;
+  studentClass?: string;
   dueDate: Date;
   questionTypes: string[];
   numberOfQuestions: number;

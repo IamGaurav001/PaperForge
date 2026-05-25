@@ -29,7 +29,7 @@ const router = Router();
 
 router.post('/generate', upload.single('file'), async (req, res) => {
   try {
-    let { title, subject, dueDate, questionTypes, numberOfQuestions, marksDistribution, instructions } = req.body;
+    let { title, subject, studentClass, dueDate, questionTypes, numberOfQuestions, marksDistribution, instructions } = req.body;
     
     // Parse JSON strings back to objects/arrays if they come from FormData
     if (typeof questionTypes === 'string') {
@@ -42,6 +42,7 @@ router.post('/generate', upload.single('file'), async (req, res) => {
     const assignment = new Assignment({
       title,
       subject,
+      studentClass,
       dueDate,
       questionTypes,
       numberOfQuestions,

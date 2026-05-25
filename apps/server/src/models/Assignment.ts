@@ -6,6 +6,7 @@ export interface IAssignment extends Omit<AssignmentDocument, 'id'>, Document {}
 const AssignmentSchema: Schema = new Schema({
   title: { type: String, required: true },
   subject: { type: String, required: true },
+  studentClass: { type: String, required: false },
   dueDate: { type: Date, required: true },
   questionTypes: { type: [String], required: true },
   numberOfQuestions: { type: Number, required: true },

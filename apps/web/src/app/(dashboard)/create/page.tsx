@@ -18,6 +18,7 @@ const questionTypeSchema = z.object({
 const formSchema = z.object({
   title: z.string().min(1, "Title is required"),
   subject: z.string().min(1, "Subject is required"),
+  studentClass: z.string().min(1, "Class is required"),
   dueDate: z.string().min(1, "Due date is required"),
   questionTypes: z.array(questionTypeSchema).min(1, "At least one question type is required"),
   instructions: z.string(),
@@ -45,6 +46,7 @@ export default function CreateAssignmentPage() {
     defaultValues: {
       title: "",
       subject: "General",
+      studentClass: "",
       dueDate: "",
       instructions: "",
       questionTypes: [
@@ -75,6 +77,7 @@ export default function CreateAssignmentPage() {
       const formData = new FormData();
       formData.append("title", data.title);
       formData.append("subject", data.subject);
+      formData.append("studentClass", data.studentClass);
       formData.append("dueDate", data.dueDate);
       formData.append("numberOfQuestions", totalQuestions.toString());
       formData.append("questionTypes", JSON.stringify(questionTypesSummary));
@@ -108,7 +111,8 @@ export default function CreateAssignmentPage() {
         title: data.title,
         subject: data.subject,
         dueDate: `${dueD}-${dueM}-${dueY}`,
-        assignedOn: `${dd}-${mm}-${yyyy}`
+        assignedOn: `${dd}-${mm}-${yyyy}`,
+        studentClass: data.studentClass
       });
       
       router.push(`/generate/${result.jobId}`);
@@ -183,6 +187,36 @@ export default function CreateAssignmentPage() {
                 {...register("title")}
               />
               {errors.title && <p className="text-xs text-red-500 mt-1 font-medium pl-2">{errors.title.message}</p>}
+            </div>
+
+            {/* Student Class */}
+            <div className="mb-6 md:mb-8">
+              <label className="block text-[14px] font-bold text-gray-900 mb-3">Student Class</label>
+              <div className="relative">
+                <select 
+                  className="w-full px-5 py-3.5 md:py-4 bg-transparent border border-gray-300 rounded-full text-[14px] font-semibold text-gray-900 focus:outline-none focus:border-gray-500 placeholder:text-gray-400 appearance-none cursor-pointer"
+                  {...register("studentClass")}
+                  defaultValue=""
+                >
+                  <option value="" disabled>Select class</option>
+                  <option value="Class 1">Class 1</option>
+                  <option value="Class 2">Class 2</option>
+                  <option value="Class 3">Class 3</option>
+                  <option value="Class 4">Class 4</option>
+                  <option value="Class 5">Class 5</option>
+                  <option value="Class 6">Class 6</option>
+                  <option value="Class 7">Class 7</option>
+                  <option value="Class 8">Class 8</option>
+                  <option value="Class 9">Class 9</option>
+                  <option value="Class 10">Class 10</option>
+                  <option value="Class 11">Class 11</option>
+                  <option value="Class 12">Class 12</option>
+                </select>
+                <div className="absolute inset-y-0 right-5 flex items-center pointer-events-none">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </div>
+              </div>
+              {errors.studentClass && <p className="text-xs text-red-500 mt-1 font-medium pl-2">{errors.studentClass.message}</p>}
             </div>
 
             {/* Upload Area */}

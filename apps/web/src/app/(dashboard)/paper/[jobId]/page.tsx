@@ -96,7 +96,8 @@ export default function PaperOutputPage() {
           title: localJob.title,
           subject: localJob.subject,
           dueDate: localJob.dueDate,
-          assignedOn: localJob.assignedOn
+          assignedOn: localJob.assignedOn,
+          studentClass: localJob.studentClass
         });
       }
 
@@ -159,7 +160,7 @@ export default function PaperOutputPage() {
             <div className="text-center border-b border-gray-300 pb-8 mb-8">
               <h1 className="text-2xl font-bold mb-2">Delhi Public School, Sector-4, Bokaro</h1>
               <h2 className="text-lg font-semibold">Subject: {paper?.title || localJob?.title || "General"}</h2>
-              <h3 className="text-lg font-semibold">Class: 5th</h3>
+              <h3 className="text-lg font-semibold">Class: {localJob?.studentClass?.replace('Class ', '') || 'N/A'}</h3>
 
               <div className="flex justify-between items-center mt-8 text-sm font-bold px-4">
                 <p>Time Allowed: 45 minutes</p>
@@ -179,7 +180,7 @@ export default function PaperOutputPage() {
                   <div className="flex-1 border-b border-gray-900"></div>
                 </div>
                 <div className="flex items-end gap-2">
-                  <span>Class: 5th &nbsp;&nbsp;&nbsp; Section:</span>
+                  <span>Class: {localJob?.studentClass?.replace('Class ', '') || '____'} &nbsp;&nbsp;&nbsp; Section:</span>
                   <div className="flex-1 border-b border-gray-900"></div>
                 </div>
               </div>

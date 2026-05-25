@@ -7,6 +7,7 @@ interface JobData {
   subject: string;
   dueDate: string;
   assignedOn: string;
+  studentClass?: string;
 }
 
 interface JobStore {
