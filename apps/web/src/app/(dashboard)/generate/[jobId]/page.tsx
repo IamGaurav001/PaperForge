@@ -50,24 +50,32 @@ export default function GenerateStatusPage() {
       }
     });
 
-    // Initial fetch in case socket missed the initial state
-    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/api/assignments/job/${jobId}`)
-      .then(res => res.json())
-      .then(data => {
-        if (data.status) {
-          setStatus(data.status);
-          setProgress(data.progress);
-          if (data.status === "COMPLETED") {
-            router.push(`/paper/${jobId}`);
+    // Polling fallback
+    const intervalId = setInterval(() => {
+      fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/api/assignments/job/${jobId}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.status) {
+            setStatus(data.status);
+            // Only update progress if we are getting real updates to avoid flickering
+            if (data.progress > progress) setProgress(data.progress);
+            
+            if (data.status === "FAILED") {
+              setError(data.error || "Generation failed");
+            } else if (data.status === "COMPLETED") {
+              clearInterval(intervalId);
+              router.push(`/paper/${jobId}`);
+            }
           }
-        }
-      })
-      .catch(console.error);
+        })
+        .catch(console.error);
+    }, 2000);
 
     return () => {
       socket.disconnect();
+      clearInterval(intervalId);
     };
-  }, [jobId, router]);
+  }, [jobId, router, progress]);
 
   const renderContent = () => {
     if (status === "FAILED") {

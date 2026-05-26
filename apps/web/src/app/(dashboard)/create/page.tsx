@@ -343,8 +343,8 @@ export default function CreateAssignmentPage() {
               <p className="text-[13px] font-bold text-gray-900 mt-1">Total Marks : {totalMarks}</p>
             </div>
 
-            {/* Additional Information (Desktop specific) */}
-            <div className="hidden md:block mb-0">
+            {/* Additional Information */}
+            <div className="mb-0">
               <label className="block text-[14px] font-bold text-gray-900 mb-4">Additional Information (For better output)</label>
               <div className="relative">
                 <textarea 
