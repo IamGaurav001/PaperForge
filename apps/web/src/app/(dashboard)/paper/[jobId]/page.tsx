@@ -63,6 +63,7 @@ export default function PaperOutputPage() {
   }
 
   const paper: GeneratedPaper = job.paper;
+  const allQuestions = paper.sections.flatMap(section => section.questions);
 
   const handleDownloadPdf = async () => {
     setIsDownloading(true);
@@ -253,20 +254,20 @@ export default function PaperOutputPage() {
               </div>
 
               <div className="space-y-2 relative z-10">
-                {[
-                  "Electroplating is the process of depositing a thin layer of metal on the surface of another metal using electric current. Its purpose is to prevent corrosion, improve appearance, or increase thickness.",
-                  "A conductor allows the flow of electric current, causing ions in the electrolyte to move and enabling chemical changes at electrodes.",
-                  "Copper sulfate solution contains free copper and sulfate ions which carry electric charge, thus conducting electricity.",
-                  "An example is the electroplating of silver on jewelry to prevent tarnishing.",
-                  "Electric current causes the movement of ions leading to chemical changes at the electrodes, hence it shows chemical effects."
-                ].map((answer, i) => (
+                {allQuestions.map((q, i) => (
                   <div key={i} className="flex gap-4 p-4 rounded-2xl hover:bg-white hover:shadow-sm transition-all border border-transparent hover:border-gray-100">
                     <div className="w-7 h-7 rounded-full bg-gray-100 text-gray-500 flex items-center justify-center text-[13px] font-bold shrink-0 mt-0.5">
                       {i + 1}
                     </div>
-                    <p className="text-[14px] text-gray-700 leading-relaxed font-medium mt-1">
-                      {answer}
-                    </p>
+                    <div className="flex-1">
+                      <p className="text-xs text-gray-500 mb-1 leading-relaxed">
+                        <span className="font-semibold text-gray-600">Question:</span> {q.question}
+                      </p>
+                      <p className="text-[14px] text-gray-700 leading-relaxed font-semibold">
+                        <span className="text-emerald-600 font-bold">Answer: </span>
+                        {q.answer || "Detailed solution is not available for this question."}
+                      </p>
+                    </div>
                   </div>
                 ))}
               </div>
